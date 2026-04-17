@@ -80,6 +80,15 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
+        .fig-caption {
+            font-size: 0.5em;
+            color: var(--text-dim);
+            text-align: center;
+            margin-top: 15px;
+            line-height: 1.4;
+            padding: 0 10px;
+        }
+
         .highlight-box {
             border-left: 4px solid var(--accent-blue);
             padding-left: 20px;
@@ -92,7 +101,7 @@
     <div class="reveal">
         <div class="slides">
 
-            <!-- Slide 1: L'Origine du Projet -->
+            <!-- Slide 1: Introduction -->
             <section>
                 <div class="source-badge">Introduction Globale</div>
                 <div class="glass-card" style="text-align: center;">
@@ -104,104 +113,135 @@
                 </div>
             </section>
 
-            <!-- Slide 2: Jalon 1 - Le Nettoyage -->
+            <!-- Slide 2: Présentation des Données -->
+            <section>
+                <div class="source-badge">Le Jeu de Données • Panaïotis et al. (2023)</div>
+                <h2>Les Matériaux de l'Analyse</h2>
+                <div class="content-grid">
+                    <div class="text-block">
+                        <p>Nos analyses reposent sur un jeu de données unique regroupant des mesures physiques et biologiques à l'échelle planétaire :</p>
+                        <ul>
+                            <li><b>Le Volet Biologique :</b> Concentrations de 19 groupes de zooplanctons (Copepoda, Collodaria, Mollusca, etc.), identifiés par imagerie.</li>
+                            <li><b>Le Volet Environnemental :</b> Température, Salinité, Oxygène et Chlorophylle, mesurés simultanément à chaque prélèvement.</li>
+                            <li><b>Le Volet Spatial & Temporel :</b> 37 campagnes océanographiques mondiales étalées sur plus d'une décennie.</li>
+                        </ul>
+                        <p>Chaque ligne de nos données représente une "signature" de l'état de l'océan à un instant T.</p>
+                    </div>
+                    <div>
+                        <img src="figures/fig_03_carte_spatiale.png" alt="Carte des données">
+                        <p class="fig-caption"><b>Distribution Mondiale :</b> Chaque point est une station de prélèvement. On observe une couverture globale, des pôles jusqu'aux zones tropicales, permettant une analyse représentative de la biodiversité marine mondiale.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: Jalon 1 - Le Nettoyage -->
             <section>
                 <div class="source-badge">Jalon 1 • 01_exploration_baseline.ipynb</div>
                 <h2>Étape 1 : Préparer et Normaliser</h2>
                 <div class="content-grid">
                     <div class="text-block">
-                        <p>Avant toute analyse, nous avons dû faire face à un défi majeur : <b>l'hétérogénéité des données</b>. Dans l'océan, certaines espèces sont présentes partout en masse, tandis que d'autres sont très rares. Cela crée un déséquilibre qui trompe les algorithmes classiques.</p>
+                        <p>Avant toute analyse, nous avons dû faire face à un défi majeur : <b>l'hétérogénéité des données</b>. Dans l'océan, certaines espèces sont présentes partout en masse, tandis que d'autres sont très rares.</p>
                         <div class="highlight-box">
                             "Nous avons appliqué la transformation de Hellinger pour mettre toutes les espèces sur un pied d'égalité."
                         </div>
-                        <p>Cette étape a permis de transformer des concentrations brutes en <b>profils de présence relatifs</b>, rendant possible la comparaison entre une station dans l'Atlantique et une autre dans l'Océan Indien.</p>
+                        <p>Cette étape a permis de transformer des concentrations brutes en <b>profils de présence relatifs</b>.</p>
                     </div>
                     <div>
                         <img src="figures/fig_06_hellinger_transformation.png" alt="Nettoyage">
-                        <p style="font-size: 0.4em; color: var(--text-dim); text-align: center; margin-top: 10px;">Le passage d'une distribution asymétrique à une distribution équilibrée.</p>
+                        <p class="fig-caption"><b>Comparaison Avant/Après :</b> À gauche, les données brutes sont écrasées par quelques valeurs géantes. À droite, après transformation, on voit enfin la diversité des espèces s'exprimer de manière équilibrée.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Slide 3: Jalon 1 - Simplification -->
+            <!-- Slide 4: Jalon 1 - Simplification -->
             <section>
                 <div class="source-badge">Jalon 1 • 01_exploration_baseline.ipynb</div>
                 <h2>Étape 2 : Simplifier pour Visualiser</h2>
                 <div class="content-grid">
                     <div class="text-block">
-                        <p>Avec 19 types de planctons différents, il est impossible pour l'œil humain de voir des structures. Nous avons utilisé l'<b>ACP (Analyse en Composantes Principales)</b> pour réduire ces 19 dimensions à seulement 2 axes majeurs.</p>
+                        <p>Avec 19 types de planctons, nous avons utilisé l'<b>ACP</b> pour réduire la complexité à 2 axes majeurs.</p>
                         <p><b>Ce que nous avons appris :</b><br>
-                        Le premier axe capture la "richesse" globale du milieu, tandis que le second révèle des oppositions entre certains taxons comme les <i>Copepoda</i> et les <i>Collodaria</i>. C'est notre première "photo" simplifiée de la biodiversité mondiale.</p>
+                        Le premier axe capture la "richesse" globale du milieu, tandis que le second révèle des oppositions entre certains taxons.</p>
                     </div>
-                    <img src="figures/fig_09_pca_cercle_correlations.png" alt="PCA">
+                    <div>
+                        <img src="figures/fig_09_pca_cercle_correlations.png" alt="PCA">
+                        <p class="fig-caption"><b>Cercle des Corrélations :</b> Chaque flèche est une espèce. Plus les flèches vont dans le même sens, plus ces espèces "voyagent ensemble". Les flèches longues indiquent les espèces qui expliquent le mieux les différences entre les océans.</p>
+                    </div>
                 </div>
             </section>
 
-            <!-- Slide 4: Jalon 2 - La Recherche de Formes -->
+            <!-- Slide 5: Jalon 2 - La Recherche de Formes -->
             <section>
                 <div class="source-badge">Jalon 2 • 02_representations.ipynb</div>
                 <h2>Étape 3 : Explorer d'autres perspectives</h2>
                 <div class="text-block">
-                    <p>La nature n'est pas toujours linéaire. Dans le Jalon 2, nous avons cherché si les données cachaient des <b>formes courbes ou complexes</b> que l'ACP ne pouvait pas voir. Nous avons testé des algorithmes comme <i>Isomap</i> ou <i>MDS</i>.</p>
+                    <p>La nature n'est pas toujours linéaire. Nous avons cherché si les données cachaient des <b>formes courbes ou complexes</b>.</p>
                     <div class="glass-card">
-                        <p>L'idée était de "déplier" la structure des données, un peu comme on déplierait une carte du monde. Nous avons constaté que les communautés forment un <b>continuum</b> : il n'y a pas de rupture brutale entre les espèces, mais des transitions douces liées aux courants et à la température.</p>
+                        <p>L'idée était de "déplier" la structure des données. Nous avons constaté que les communautés forment un <b>continuum</b> : des transitions douces liées aux courants et à la température.</p>
                     </div>
-                    <img src="figures/fig_18_comparaison_representations.png" style="max-height: 280px; width: auto; display: block; margin: 20px auto;">
                 </div>
+                <img src="figures/fig_18_comparaison_representations.png" style="max-height: 250px; width: auto; display: block; margin: 20px auto;">
+                <p class="fig-caption"><b>Galerie des Projections :</b> On compare ici l'ACP classique (linéaire) avec des méthodes plus souples (Isomap, LLE). Ces dernières montrent que les données s'étirent en "filaments", suivant les gradients de température de l'eau.</p>
             </section>
 
-            <!-- Slide 5: Jalon 3 - Créer les Groupes -->
+            <!-- Slide 6: Jalon 3 - Créer les Groupes -->
             <section>
                 <div class="source-badge">Jalon 3 • 03_clusterings.ipynb</div>
                 <h2>Étape 4 : Identifier les Familles</h2>
                 <div class="content-grid">
                     <div class="text-block">
-                        <p>Une fois les données préparées, nous avons demandé à l'ordinateur de regrouper les stations similaires. C'est le <b>Clustering</b>.</p>
-                        <p>Nous n'avons pas seulement cherché des groupes évidents (K-Means), nous avons aussi cherché à isoler les <b>points "atypiques"</b> (le bruit) avec l'algorithme <i>DBSCAN</i>. </p>
-                        <p>Cela nous a permis de distinguer les zones océaniques "standards" des zones très particulières qui pourraient correspondre à des phénomènes biologiques isolés.</p>
+                        <p>L'ordinateur regroupe les stations similaires : c'est le <b>Clustering</b>.</p>
+                        <p>Nous avons aussi isolé les <b>points "atypiques"</b> (le bruit) avec l'algorithme <i>DBSCAN</i>. </p>
+                        <p>Cela nous a permis de distinguer les zones océaniques "standards" des zones très particulières.</p>
                     </div>
-                    <img src="figures/fig_19_dbscan.png" alt="Groupes">
+                    <div>
+                        <img src="figures/fig_19_dbscan.png" alt="Groupes">
+                        <p class="fig-caption"><b>Cartographie des Clusters :</b> Chaque couleur est un groupe d'espèces. Les points gris représentent le "bruit" : des échantillons uniques qui ne ressemblent à rien d'autre, souvent situés dans des zones de mélange intense.</p>
+                    </div>
                 </div>
             </section>
 
-            <!-- Slide 6: Jalon 3 - La Nuance Probabiliste -->
+            <!-- Slide 7: Jalon 3 - La Nuance Probabiliste -->
             <section>
                 <div class="source-badge">Jalon 3 • 03_clusterings.ipynb</div>
                 <h2>Étape 5 : Accepter l'Incertitude</h2>
                 <div class="content-grid">
                     <div class="text-block">
-                        <p>Dans l'océan, une station ne fait pas toujours partie à 100% d'un seul groupe. Elle peut être à la frontière. Nous avons utilisé le <b>GMM (Modèle de Mélange Gaussien)</b> pour capturer cette nuance.</p>
-                        <p>Au lieu de dire "cette station est le groupe A", le GMM nous dit "cette station a 70% de chances d'être le groupe A et 30% le groupe B". Cette approche est beaucoup plus proche de la <b>réalité biologique</b> des zones de transition marine.</p>
+                        <p>Dans l'océan, une station peut être à la frontière entre deux groupes. Nous avons utilisé le <b>GMM</b> pour capturer cette nuance.</p>
+                        <p>Cette approche est beaucoup plus proche de la <b>réalité biologique</b> des zones de transition marine.</p>
                     </div>
-                    <img src="figures/fig_24_gmm.png" alt="Probabilités">
+                    <div>
+                        <img src="figures/fig_24_gmm.png" alt="Probabilités">
+                        <p class="fig-caption"><b>Analyse du GMM :</b> À droite, on voit l'incertitude. Plus le point est rouge, plus l'IA hésite entre deux groupes. On remarque que l'hésitation est maximale aux frontières géographiques des courants marins.</p>
+                    </div>
                 </div>
             </section>
 
-            <!-- Slide 7: Le Bilan -->
+            <!-- Slide 8: Le Bilan -->
             <section>
                 <div class="source-badge">Synthèse Comparative</div>
                 <h2>Bilan : Quelle méthode retenir ?</h2>
                 <div class="text-block">
-                    <p>Nous avons mis en compétition tous nos modèles. Voici ce qu'il faut retenir de ce match technologique :</p>
+                    <p>Nous avons mis en compétition tous nos modèles :</p>
                     <div class="glass-card">
                         <ul>
-                            <li><b>K-Means :</b> Le plus simple, efficace pour une première vue d'ensemble.</li>
-                            <li><b>GMM :</b> Le plus réaliste, car il accepte que les groupes se chevauchent.</li>
-                            <li><b>Spectral Clustering :</b> Très bon pour identifier des sous-groupes très spécifiques et complexes.</li>
+                            <li><b>K-Means :</b> Efficace pour une première vue.</li>
+                            <li><b>GMM :</b> Le plus réaliste (chevauchements).</li>
+                            <li><b>Spectral Clustering :</b> Pour les structures complexes.</li>
                         </ul>
                     </div>
-                    <p>Au final, nous avons réussi à diviser les océans en <b>7 grandes provinces biologiques</b> stables et cohérentes.</p>
+                    <p>Au final, nous avons identifié <b>7 grandes provinces biologiques</b> stables.</p>
                 </div>
             </section>
 
-            <!-- Slide 8: Conclusion -->
+            <!-- Slide 9: Conclusion -->
             <section>
                 <div class="source-badge">Conclusion Finale</div>
-                <h2>Et après ?</h2>
+                <h2>Conclusion & Perspectives</h2>
                 <div class="content-grid">
                     <div class="text-block">
-                        <p>Ce projet a prouvé que nous pouvons utiliser les données satellites et les prélèvements en mer pour <b>automatiser la surveillance de la santé des océans</b>.</p>
-                        <p>La prochaine étape sera de lier ces groupes de planctons au <b>changement climatique</b> : comment ces provinces vont-elles se déplacer si l'eau se réchauffe ?</p>
+                        <p>Ce projet permet d'<b>automatiser la surveillance de la santé des océans</b>.</p>
+                        <p>La prochaine étape sera de lier ces groupes au <b>changement climatique</b>.</p>
                         <div class="highlight-box">
                             "Une base solide pour prédire l'avenir de nos écosystèmes marins."
                         </div>
