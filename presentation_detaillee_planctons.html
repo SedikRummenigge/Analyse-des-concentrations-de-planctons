@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Analyse Approfondie : Zooplancton</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #0b0f1a;
+            --card-bg: rgba(23, 32, 53, 0.8);
+            --accent-blue: #00d2ff;
+            --accent-purple: #9d50bb;
+            --accent-green: #10b981;
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+        }
+
+        .reveal {
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+        }
+
+        .reveal h2 {
+            font-size: 1.6em;
+            text-align: left;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .text-block {
+            font-size: 0.65em;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
+        .text-block p { margin-bottom: 15px; }
+        .text-block ul { margin-left: 20px; }
+        .text-block li { margin-bottom: 8px; }
+
+        .highlight { color: var(--accent-blue); font-weight: 600; }
+        
+        .formula-tag {
+            background: #000;
+            color: var(--accent-blue);
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            display: block;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .source-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+            font-size: 0.5em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .reveal img {
+            border-radius: 8px;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        table {
+            width: 100%;
+            font-size: 0.55em;
+            border-collapse: collapse;
+        }
+
+        th { border-bottom: 2px solid var(--accent-blue); padding: 10px; text-align: left; color: var(--accent-blue); }
+        td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1: Introduction -->
+            <section>
+                <div class="source-badge">Projet Global • Introduction</div>
+                <div class="glass-card" style="text-align: center;">
+                    <h1 style="font-size: 2.2em; margin-bottom: 10px;">Analyse de la Structure des Communautés de Zooplancton</h1>
+                    <p style="color: var(--accent-blue); font-size: 0.9em;">Exploration des données Panaïotis et al. (2023)</p>
+                    <div class="text-block" style="text-align: center; margin-top: 40px; font-size: 0.75em;">
+                        <p>Cette étude porte sur l'analyse de 37 campagnes océanographiques mondiales couvrant la période 2008-2019. L'objectif est de caractériser les provinces biologiques marines en utilisant des méthodes d'apprentissage non-supervisé.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 2: Hellinger -->
+            <section>
+                <div class="source-badge">Jalon 1 • 01_exploration_baseline.ipynb</div>
+                <h2>01. Prétraitement : La Distance de Hellinger</h2>
+                <div class="content-grid">
+                    <div class="text-block">
+                        <p>En écologie numérique, les données de concentration posent deux problèmes majeurs : le <span class="highlight">problème des zéros</span> (sparsity) et l'influence disproportionnée des <span class="highlight">espèces dominantes</span>.</p>
+                        <div class="glass-card">
+                            <p>La transformation de Hellinger consiste à calculer la racine carrée des abondances relatives :</p>
+                            <span class="formula-tag">y'_{i,j} = sqrt( y_{i,j} / Σ y_{i,j} )</span>
+                        </div>
+                        <ul>
+                            <li><strong>Linéarisation :</strong> Elle permet d'utiliser la distance euclidienne sur des données non-linéaires.</li>
+                            <li><strong>Robustesse :</strong> Elle évite que deux sites soient considérés comme similaires uniquement parce qu'ils ne contiennent pas une espèce donnée.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <img src="figures/fig_06_hellinger_transformation.png" alt="Hellinger">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: ACP -->
+            <section>
+                <div class="source-badge">Jalon 1 • 01_exploration_baseline.ipynb</div>
+                <h2>02. Réduction de Dimension : ACP</h2>
+                <div class="content-grid">
+                    <div class="text-block">
+                        <p>L'Analyse en Composantes Principales (ACP) sert de baseline pour projeter les 19 taxons dans un plan bidimensionnel optimal.</p>
+                        <div class="glass-card">
+                            <p><strong>Statistiques de décomposition :</strong></p>
+                            <ul>
+                                <li><span class="highlight">PC1 (25.4%) :</span> Gradient d'abondance totale.</li>
+                                <li><span class="highlight">PC2 (13.5%) :</span> Structure taxonomique différentielle.</li>
+                                <li><span class="highlight">Inertie :</span> 9 composantes pour 80% de variance.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <img src="figures/fig_09_pca_cercle_correlations.png" alt="PCA">
+                </div>
+            </section>
+
+            <!-- Slide 4: Manifold Learning -->
+            <section>
+                <div class="source-badge">Jalon 2 • 02_representations.ipynb</div>
+                <h2>03. Représentations Non-Linéaires</h2>
+                <div class="text-block">
+                    <p>L'ACP étant une méthode linéaire, le Jalon 2 explore des méthodes capables de déplier des structures complexes (variétés).</p>
+                    <div class="glass-card">
+                        <div class="content-grid" style="grid-template-columns: 1fr 1fr;">
+                            <ul style="font-size: 0.9em;">
+                                <li><span class="highlight">AFC :</span> Analyse Factorielle des Correspondances.</li>
+                                <li><span class="highlight">Isomap :</span> Distances géodésiques.</li>
+                                <li><span class="highlight">MDS :</span> Multidimensional Scaling.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <img src="figures/fig_18_comparaison_representations.png" style="max-height: 300px; width: auto; display: block; margin: 20px auto;">
+                </div>
+            </section>
+
+            <!-- Slide 5: Clustering DBSCAN -->
+            <section>
+                <div class="source-badge">Jalon 3 • 03_clusterings.ipynb</div>
+                <h2>04. Algorithmes de Clustering Avancés</h2>
+                <div class="content-grid">
+                    <div class="text-block">
+                        <p>Le Jalon 3 se concentre sur l'identification de structures par densité et la gestion du bruit.</p>
+                        <div class="glass-card">
+                            <p><strong>DBSCAN & HDBSCAN :</strong></p>
+                            <ul>
+                                <li>Identifient le <span class="highlight">bruit</span> (outliers), ici ~12%.</li>
+                                <li>HDBSCAN : Hiérarchisation des densités sans paramètre ε fixe.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <img src="figures/fig_19_dbscan.png" alt="DBSCAN">
+                </div>
+            </section>
+
+            <!-- Slide 6: GMM -->
+            <section>
+                <div class="source-badge">Jalon 3 • 03_clusterings.ipynb</div>
+                <h2>05. Modélisation Probabiliste (GMM)</h2>
+                <div class="content-grid">
+                    <div class="text-block">
+                        <p>Le Modèle de Mélange Gaussien offre une approche probabiliste "souple".</p>
+                        <div class="glass-card">
+                            <p><strong>Avantages théoriques :</strong></p>
+                            <ul>
+                                <li><span class="highlight">Soft Clustering :</span> Probabilités d'assignation.</li>
+                                <li><span class="highlight">BIC :</span> Critère d'information bayésien pour le choix de K=7.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <img src="figures/fig_24_gmm.png" alt="GMM">
+                </div>
+            </section>
+
+            <!-- Slide 7: Benchmarking -->
+            <section>
+                <div class="source-badge">Jalon 3 • Synthèse Comparative</div>
+                <h2>06. Comparaison des Performances</h2>
+                <div class="text-block">
+                    <p>Évaluation croisée des algorithmes sur les métriques de cohésion et de séparation.</p>
+                    <div class="glass-card">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Algorithme</th>
+                                    <th>Silhouette ↑</th>
+                                    <th>Davies-Bouldin ↓</th>
+                                    <th>Calinski-H. ↑</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><span class="highlight">K-Means</span></td><td>0.312</td><td>1.42</td><td>2450</td></tr>
+                                <tr><td><span class="highlight">GMM</span></td><td>0.291</td><td>1.48</td><td>2100</td></tr>
+                                <tr><td><span class="highlight">Spectral</span></td><td>0.284</td><td>1.55</td><td>1890</td></tr>
+                                <tr><td><span class="highlight">HDBSCAN</span></td><td>0.155</td><td>1.80</td><td>450</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 8: Conclusion -->
+            <section>
+                <div class="source-badge">Synthèse Finale</div>
+                <h2>Conclusions et Perspectives</h2>
+                <div class="content-grid">
+                    <div class="text-block">
+                        <div class="glass-card" style="border-left: 4px solid var(--accent-blue);">
+                            <ul>
+                                <li>Hellinger : Indispensable (Jalon 1).</li>
+                                <li>GMM & Spectral : Les plus robustes (Jalon 3).</li>
+                                <li>Continuum : Réalité des données océaniques.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="color: var(--accent-blue); font-size: 1.2em;">Fin</h3>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/markdown/markdown.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/math/math.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            navigationMode: 'linear',
+            controls: true,
+            progress: true,
+            center: true,
+            transition: 'none',
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+        });
+    </script>
+</body>
+</html>
