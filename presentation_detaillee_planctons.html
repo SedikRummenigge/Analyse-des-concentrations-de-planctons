@@ -129,7 +129,7 @@
                     </div>
                     <div>
                         <img src="figures/fig_03_carte_spatiale.png" alt="Carte des données">
-                        <p class="fig-caption"><b>Distribution Mondiale :</b> Chaque point est une station de prélèvement. On observe une couverture globale, des pôles jusqu'aux zones tropicales, permettant une analyse représentative de la biodiversité marine mondiale.</p>
+                        <p class="fig-caption"><b>Distribution Mondiale des Stations :</b> Chaque point représente une station de prélèvement issue des 37 campagnes océanographiques. La carte montre une couverture planétaire remarquable : océans Atlantique, Pacifique, Indien, mer Méditerranée et zones polaires sont représentés. Cette diversité géographique est essentielle — elle garantit que nos résultats ne sont pas biaisés vers un seul type d'environnement marin et permettent d'identifier des structures biologiques vraiment universelles.</p>
                     </div>
                 </div>
             </section>
@@ -140,15 +140,16 @@
                 <h2>Étape 1 : Préparer et Normaliser</h2>
                 <div class="content-grid">
                     <div class="text-block">
-                        <p>Avant toute analyse, nous avons dû faire face à un défi majeur : <b>l'hétérogénéité des données</b>. Dans l'océan, certaines espèces sont présentes partout en masse, tandis que d'autres sont très rares.</p>
+                        <p>Avant toute analyse, nous avons dû résoudre un problème fondamental : <b>l'hétérogénéité des données</b>. Certaines espèces de plancton, comme les Copepoda, sont omniprésentes et peuvent être comptées par centaines dans un même échantillon. D'autres, très rares, apparaissent à peine une ou deux fois sur l'ensemble du jeu de données.</p>
+                        <p>Si l'on compare ces chiffres bruts directement, les espèces rares deviennent <b>invisibles</b> mathématiquement — écrasées par les valeurs des espèces dominantes. Ce n'est pas un problème de mesure, c'est un problème d'échelle.</p>
                         <div class="highlight-box">
-                            "Nous avons appliqué la transformation de Hellinger pour mettre toutes les espèces sur un pied d'égalité."
+                            "La transformation de Hellinger résout cela : pour chaque station, on divise la concentration de chaque espèce par le total capturé, puis on prend la racine carrée. Le résultat n'est plus une quantité, c'est une <em>proportion pondérée</em>."
                         </div>
-                        <p>Cette étape a permis de transformer des concentrations brutes en <b>profils de présence relatifs</b>.</p>
+                        <p>Concrètement : deux stations avec des populations très différentes en taille mais avec la <b>même composition relative</b> d'espèces seront désormais reconnues comme similaires. C'est cette notion de portrait de communauté — et non de volume — qui guide toute la suite de l'analyse.</p>
                     </div>
                     <div>
                         <img src="figures/fig_06_hellinger_transformation.png" alt="Nettoyage">
-                        <p class="fig-caption"><b>Comparaison Avant/Après :</b> À gauche, les données brutes sont écrasées par quelques valeurs géantes. À droite, après transformation, on voit enfin la diversité des espèces s'exprimer de manière équilibrée.</p>
+                        <p class="fig-caption"><b>Comparaison Avant/Après la Transformation de Hellinger :</b> À gauche, les données brutes révèlent un déséquilibre criant : une ou deux espèces très abondantes (comme les Copepoda) dominent complètement l'échelle, rendant les autres espèces quasiment invisibles. À droite, après la transformation, chaque station est convertie en un <em>profil de présence relative</em> : peu importe la quantité totale capturée, c'est la composition de la communauté qui compte. Les espèces rares deviennent lisibles et comparables aux espèces dominantes.</p>
                     </div>
                 </div>
             </section>
@@ -159,13 +160,13 @@
                 <h2>Étape 2 : Simplifier pour Visualiser</h2>
                 <div class="content-grid">
                     <div class="text-block">
-                        <p>Avec 19 types de planctons, nous avons utilisé l'<b>ACP</b> pour réduire la complexité à 2 axes majeurs.</p>
-                        <p><b>Ce que nous avons appris :</b><br>
-                        Le premier axe capture la "richesse" globale du milieu, tandis que le second révèle des oppositions entre certains taxons.</p>
+                        <p>Nos données ont 19 dimensions — une par type de plancton. Impossible à visualiser directement. L'<b>Analyse en Composantes Principales (ACP)</b> est une technique qui compresse ces 19 dimensions en quelques grands axes, chacun capturant une partie de la variabilité totale des données.</p>
+                        <p>Concrètement : au lieu de décrire une station par ses 19 concentrations d'espèces, on la décrit par sa position sur 2 ou 3 axes synthétiques. Ces axes ne correspondent pas à des espèces réelles, mais à des <b>combinaisons d'espèces</b> qui varient ensemble.</p>
+                        <p><b>Ce que nous avons découvert :</b> nous avons conservé suffisamment d'axes pour expliquer <b>plus de 80 % de la variabilité</b> totale des données. Le premier axe traduit globalement la "richesse" et la densité du milieu marin. Le second révèle des oppositions biologiques claires : certaines espèces prospèrent dans les eaux froides profondes, d'autres dans les zones de surface chaudes et productives.</p>
                     </div>
                     <div>
                         <img src="figures/fig_09_pca_cercle_correlations.png" alt="PCA">
-                        <p class="fig-caption"><b>Cercle des Corrélations :</b> Chaque flèche est une espèce. Plus les flèches vont dans le même sens, plus ces espèces "voyagent ensemble". Les flèches longues indiquent les espèces qui expliquent le mieux les différences entre les océans.</p>
+                        <p class="fig-caption"><b>Cercle des Corrélations de l'ACP :</b> Chaque flèche représente une espèce de plancton. Sa longueur indique à quel point cette espèce contribue à différencier les stations : une flèche longue = une espèce très discriminante. La direction révèle les relations : des flèches parallèles indiquent des espèces qui cohabitent systématiquement (corrélées positivement), tandis que des flèches opposées signalent une exclusion mutuelle. Les espèces proches du centre sont peu informatiques sur ces deux axes principaux.</p>
                     </div>
                 </div>
             </section>
@@ -175,13 +176,19 @@
                 <div class="source-badge">Jalon 2 • 02_representations.ipynb</div>
                 <h2>Étape 3 : Explorer d'autres perspectives</h2>
                 <div class="text-block">
-                    <p>La nature n'est pas toujours linéaire. Nous avons cherché si les données cachaient des <b>formes courbes ou complexes</b>.</p>
+                    <p>L'ACP suppose que les données s'organisent selon des axes droits. Mais la nature, elle, n'est pas toujours linéaire. Et si les communautés planctoniques s'organisaient en courbes, en spirales, en surfaces repliées sur elles-mêmes ?</p>
+                    <p>Nous avons testé trois méthodes alternatives :</p>
+                    <ul style="margin: 0 0 12px 20px;">
+                        <li><b>Isomap</b> : calcule les distances entre stations en suivant la "surface" réelle des données, comme on mesurerait un chemin sur une montagne plutôt qu'à vol d'oiseau.</li>
+                        <li><b>LLE (Locally Linear Embedding)</b> : reconstruit chaque station à partir de ses voisines immédiates, comme un puzzle dont chaque pièce s'assemble localement.</li>
+                        <li><b>MDS non-métrique</b> : projette les données en 2D en préservant uniquement l'ordre des dissimilarités — sans forcer une échelle précise.</li>
+                    </ul>
                     <div class="glass-card">
-                        <p>L'idée était de "déplier" la structure des données. Nous avons constaté que les communautés forment un <b>continuum</b> : des transitions douces liées aux courants et à la température.</p>
+                        <p><b>Résultat :</b> les communautés forment un <b>continuum</b> — pas des groupes discrets, mais des transitions douces le long de gradients environnementaux (température, profondeur, salinité). Les méthodes non-linéaires ont révélé des filaments que l'ACP n'aurait jamais montrés.</p>
                     </div>
                 </div>
                 <img src="figures/fig_18_comparaison_representations.png" style="max-height: 250px; width: auto; display: block; margin: 20px auto;">
-                <p class="fig-caption"><b>Galerie des Projections :</b> On compare ici l'ACP classique (linéaire) avec des méthodes plus souples (Isomap, LLE). Ces dernières montrent que les données s'étirent en "filaments", suivant les gradients de température de l'eau.</p>
+                <p class="fig-caption"><b>Galerie comparative des projections 2D :</b> Chaque panneau projette les mêmes données selon une méthode différente. L'ACP (en haut à gauche) offre une vue linéaire et lisible, mais aplatit les structures courbes. L'Isomap et la LLE "déroulent" la géométrie réelle des données en respectant les distances locales : on y voit alors des filaments continus, qui correspondent aux gradients de température et de profondeur. Le MDS non-métrique confirme que la structure des données ressemble davantage à un continuum qu'à des groupes bien séparés.</p>
             </section>
 
             <!-- Slide 6: Jalon 3 - Créer les Groupes -->
@@ -190,13 +197,13 @@
                 <h2>Étape 4 : Identifier les Familles</h2>
                 <div class="content-grid">
                     <div class="text-block">
-                        <p>L'ordinateur regroupe les stations similaires : c'est le <b>Clustering</b>.</p>
-                        <p>Nous avons aussi isolé les <b>points "atypiques"</b> (le bruit) avec l'algorithme <i>DBSCAN</i>. </p>
-                        <p>Cela nous a permis de distinguer les zones océaniques "standards" des zones très particulières.</p>
+                        <p>Après avoir visualisé les données, l'objectif était de regrouper automatiquement les stations qui se ressemblent : c'est le principe du <b>clustering</b>. Mais tous les algorithmes ne se valent pas.</p>
+                        <p>Nous avons testé plusieurs approches, dont <b>DBSCAN</b> (<em>Density-Based Spatial Clustering of Applications with Noise</em>). À la différence du K-Means — qui impose un nombre de groupes fixé à l'avance et force chaque point dans un groupe — DBSCAN travaille par <b>densité locale</b> : il identifie des zones où les stations sont concentrées, et laisse de côté les points trop isolés, qu'il étiquette comme "bruit".</p>
+                        <p>Ce "bruit" n'est pas un défaut de l'algorithme — c'est une <b>information précieuse</b>. Ces stations isolées correspondent souvent à des zones de transition entre deux masses d'eau, à des événements ponctuels (upwelling, bloom algal), ou à des échantillons prélevés dans des conditions exceptionnelles.</p>
                     </div>
                     <div>
                         <img src="figures/fig_19_dbscan.png" alt="Groupes">
-                        <p class="fig-caption"><b>Cartographie des Clusters :</b> Chaque couleur est un groupe d'espèces. Les points gris représentent le "bruit" : des échantillons uniques qui ne ressemblent à rien d'autre, souvent situés dans des zones de mélange intense.</p>
+                        <p class="fig-caption"><b>Cartographie DBSCAN des Clusters :</b> Contrairement au K-Means qui force chaque point dans un groupe, DBSCAN identifie les clusters par densité : un groupe se forme là où les stations se ressemblent suffisamment et sont assez nombreuses. Chaque couleur correspond à une province biologique distincte. Les points gris sont le "bruit" — des stations isolées qui ne s'intègrent dans aucun groupe, souvent situées dans des zones de transition ou de mélange intense entre deux masses d'eau. Leur présence est une information en soi.</p>
                     </div>
                 </div>
             </section>
@@ -207,12 +214,13 @@
                 <h2>Étape 5 : Accepter l'Incertitude</h2>
                 <div class="content-grid">
                     <div class="text-block">
-                        <p>Dans l'océan, une station peut être à la frontière entre deux groupes. Nous avons utilisé le <b>GMM</b> pour capturer cette nuance.</p>
-                        <p>Cette approche est beaucoup plus proche de la <b>réalité biologique</b> des zones de transition marine.</p>
+                        <p>Jusqu'ici, chaque station était assignée à <em>un seul</em> groupe. Mais la réalité marine est plus nuancée : une station prélevée à la frontière de deux courants n'appartient pas franchement à l'un ou à l'autre.</p>
+                        <p>Le <b>GMM (Gaussian Mixture Model)</b> aborde le problème différemment. Au lieu d'assigner chaque station à un groupe de manière rigide, il calcule une <b>probabilité d'appartenance</b> à chacun des groupes. Techniquement, il modélise chaque groupe comme une distribution gaussienne (une "cloche") dans l'espace des données, et cherche le mélange optimal de cloches pour expliquer l'ensemble des points.</p>
+                        <p>Une station peut donc appartenir à 70 % au groupe "eaux tropicales chaudes" et à 30 % au groupe "eaux de surface tempérées". Ce n'est pas de l'indécision — c'est de la <b>précision biologique</b>. Les zones de transition marine existent réellement, et le GMM est l'un des rares algorithmes à les représenter honnêtement.</p>
                     </div>
                     <div>
                         <img src="figures/fig_24_gmm.png" alt="Probabilités">
-                        <p class="fig-caption"><b>Analyse du GMM :</b> À droite, on voit l'incertitude. Plus le point est rouge, plus l'IA hésite entre deux groupes. On remarque que l'hésitation est maximale aux frontières géographiques des courants marins.</p>
+                        <p class="fig-caption"><b>Analyse du GMM (Gaussian Mixture Model) :</b> Le graphique de gauche montre les clusters GMM dans l'espace réduit de l'ACP : chaque couleur est un groupe, mais les frontières sont floues par nature. Le graphique de droite visualise l'<em>entropie d'appartenance</em> — une mesure d'incertitude : un point bleu est clairement assigné à un seul groupe, un point rouge hésite fortement entre deux groupes. On remarque que cette incertitude est maximale aux zones de transition entre courants marins, ce qui est biologiquement cohérent : ces zones sont de véritables carrefours écologiques où plusieurs espèces se mélangent.</p>
                     </div>
                 </div>
             </section>
