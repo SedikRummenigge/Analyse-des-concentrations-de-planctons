@@ -353,35 +353,41 @@
                     <span class="lang-fr">Étape 3 : Explorer d'autres perspectives</span>
                     <span class="lang-en">Step 3: Explore Other Perspectives</span>
                 </h2>
-                <div class="text-block lang-fr">
-                    <p>L'ACP suppose que les données s'organisent selon des axes droits. Mais la nature, elle, n'est pas toujours linéaire. Et si les communautés planctoniques s'organisaient en courbes, en spirales, en surfaces repliées sur elles-mêmes ?</p>
-                    <p>Nous avons testé trois méthodes alternatives :</p>
-                    <ul style="margin: 0 0 12px 20px;">
-                        <li><b>Isomap</b> : calcule les distances entre stations en suivant la "surface" réelle des données, comme on mesurerait un chemin sur une montagne plutôt qu'à vol d'oiseau.</li>
-                        <li><b>LLE (Locally Linear Embedding)</b> : reconstruit chaque station à partir de ses voisines immédiates, comme un puzzle dont chaque pièce s'assemble localement.</li>
-                        <li><b>MDS non-métrique</b> : projette les données en 2D en préservant uniquement l'ordre des dissimilarités — sans forcer une échelle précise.</li>
-                    </ul>
-                    <div class="glass-card">
-                        <p><b>Résultat :</b> les communautés forment un <b>continuum</b> — pas des groupes discrets, mais des transitions douces le long de gradients environnementaux (température, profondeur, salinité). Les méthodes non-linéaires ont révélé des filaments que l'ACP n'aurait jamais montrés.</p>
+                <div class="content-grid">
+                    <div>
+                        <div class="text-block lang-fr">
+                            <p>L'ACP suppose que les données s'organisent selon des axes droits. Mais la nature, elle, n'est pas toujours linéaire. Et si les communautés planctoniques s'organisaient en courbes, en spirales, en surfaces repliées sur elles-mêmes ?</p>
+                            <p>Nous avons testé trois méthodes alternatives :</p>
+                            <ul style="margin: 0 0 12px 20px;">
+                                <li><b>Isomap</b> : calcule les distances entre stations en suivant la "surface" réelle des données, comme on mesurerait un chemin sur une montagne plutôt qu'à vol d'oiseau.</li>
+                                <li><b>LLE (Locally Linear Embedding)</b> : reconstruit chaque station à partir de ses voisines immédiates, comme un puzzle dont chaque pièce s'assemble localement.</li>
+                                <li><b>MDS non-métrique</b> : projette les données en 2D en préservant uniquement l'ordre des dissimilarités — sans forcer une échelle précise.</li>
+                            </ul>
+                            <div class="glass-card">
+                                <p><b>Résultat :</b> les communautés forment un <b>continuum</b> — pas des groupes discrets, mais des transitions douces le long de gradients environnementaux (température, profondeur, salinité). Les méthodes non-linéaires ont révélé des filaments que l'ACP n'aurait jamais montrés.</p>
+                            </div>
+                        </div>
+                        <div class="text-block lang-en">
+                            <p>PCA assumes data organizes along straight axes. But nature is not always linear. What if planktonic communities organized themselves in curves, spirals, or surfaces folded upon themselves?</p>
+                            <p>We tested three alternative methods:</p>
+                            <ul style="margin: 0 0 12px 20px;">
+                                <li><b>Isomap</b>: computes distances between stations by following the "surface" of the actual data, like measuring a path on a mountain rather than as the crow flies.</li>
+                                <li><b>LLE (Locally Linear Embedding)</b>: reconstructs each station from its immediate neighbors, like a puzzle where each piece fits together locally.</li>
+                                <li><b>Non-metric MDS</b>: projects data into 2D while preserving only the order of dissimilarities — without forcing a precise scale.</li>
+                            </ul>
+                            <div class="glass-card">
+                                <p><b>Result:</b> communities form a <b>continuum</b> — not discrete groups, but smooth transitions along environmental gradients (temperature, depth, salinity). Non-linear methods revealed filaments that PCA would never have shown.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="figures/fig_18_comparaison_representations.png" alt="Comparaison des représentations">
+                        <p class="fig-caption">
+                            <span class="lang-fr"><b>Galerie comparative des projections 2D :</b> Chaque panneau projette les mêmes données selon une méthode différente. L'ACP (en haut à gauche) offre une vue linéaire et lisible, mais aplatit les structures courbes. L'Isomap et la LLE "déroulent" la géométrie réelle des données en respectant les distances locales : on y voit alors des filaments continus, qui correspondent aux gradients de température et de profondeur. Le MDS non-métrique confirme que la structure des données ressemble davantage à un continuum qu'à des groupes bien séparés.</span>
+                            <span class="lang-en"><b>Comparative Gallery of 2D Projections:</b> Each panel projects the same data using a different method. PCA (top left) offers a linear and readable view, but flattens curved structures. Isomap and LLE "unroll" the real geometry of the data by respecting local distances: continuous filaments become visible, corresponding to temperature and depth gradients. Non-metric MDS confirms that the data structure more closely resembles a continuum than well-separated groups.</span>
+                        </p>
                     </div>
                 </div>
-                <div class="text-block lang-en">
-                    <p>PCA assumes data organizes along straight axes. But nature is not always linear. What if planktonic communities organized themselves in curves, spirals, or surfaces folded upon themselves?</p>
-                    <p>We tested three alternative methods:</p>
-                    <ul style="margin: 0 0 12px 20px;">
-                        <li><b>Isomap</b>: computes distances between stations by following the "surface" of the actual data, like measuring a path on a mountain rather than as the crow flies.</li>
-                        <li><b>LLE (Locally Linear Embedding)</b>: reconstructs each station from its immediate neighbors, like a puzzle where each piece fits together locally.</li>
-                        <li><b>Non-metric MDS</b>: projects data into 2D while preserving only the order of dissimilarities — without forcing a precise scale.</li>
-                    </ul>
-                    <div class="glass-card">
-                        <p><b>Result:</b> communities form a <b>continuum</b> — not discrete groups, but smooth transitions along environmental gradients (temperature, depth, salinity). Non-linear methods revealed filaments that PCA would never have shown.</p>
-                    </div>
-                </div>
-                <img src="figures/fig_18_comparaison_representations.png" style="max-height: 250px; width: auto; display: block; margin: 20px auto;">
-                <p class="fig-caption">
-                    <span class="lang-fr"><b>Galerie comparative des projections 2D :</b> Chaque panneau projette les mêmes données selon une méthode différente. L'ACP (en haut à gauche) offre une vue linéaire et lisible, mais aplatit les structures courbes. L'Isomap et la LLE "déroulent" la géométrie réelle des données en respectant les distances locales : on y voit alors des filaments continus, qui correspondent aux gradients de température et de profondeur. Le MDS non-métrique confirme que la structure des données ressemble davantage à un continuum qu'à des groupes bien séparés.</span>
-                    <span class="lang-en"><b>Comparative Gallery of 2D Projections:</b> Each panel projects the same data using a different method. PCA (top left) offers a linear and readable view, but flattens curved structures. Isomap and LLE "unroll" the real geometry of the data by respecting local distances: continuous filaments become visible, corresponding to temperature and depth gradients. Non-metric MDS confirms that the data structure more closely resembles a continuum than well-separated groups.</span>
-                </p>
             </section>
 
             <!-- Slide 7: Jalon 3 - DBSCAN + HDBSCAN + OPTICS -->
