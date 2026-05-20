@@ -120,6 +120,52 @@
         }
 
         .lang-en { display: none; }
+
+        .content-grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 18px;
+            align-items: start;
+        }
+
+        .method-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: left;
+        }
+
+        .method-card h3 {
+            font-size: 0.78em;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin: 0 0 8px 0;
+        }
+
+        .method-card .text-block {
+            font-size: 0.63em;
+            line-height: 1.55;
+        }
+
+        .method-card .text-block p {
+            margin-bottom: 6px;
+        }
+
+        .method-card img {
+            border-radius: 8px;
+            width: 100%;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+            margin-top: 10px;
+        }
+
+        .content-grid-2cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
     </style>
 </head>
 <body>
@@ -246,7 +292,7 @@
                         <p><b>What we discovered:</b> we retained enough axes to explain <b>more than 80% of the total variability</b> in the data. The first axis broadly reflects the "richness" and density of the marine environment. The second reveals clear biological oppositions: some species thrive in cold deep waters, others in warm productive surface zones.</p>
                     </div>
                     <div>
-                        <img src="figures/fig_09_pca_cercle_correlations.png" alt="PCA">
+                        <img src="figures/fig_09_pca_cercle_correlations.png" alt="PCA" style="width: 80%; display: block; margin: 0 auto;">
                         <p class="fig-caption">
                             <span class="lang-fr"><b>Cercle des Corrélations de l'ACP :</b> Chaque flèche représente une espèce de plancton. Sa longueur indique à quel point cette espèce contribue à différencier les stations : une flèche longue = une espèce très discriminante. La direction révèle les relations : des flèches parallèles indiquent des espèces qui cohabitent systématiquement (corrélées positivement), tandis que des flèches opposées signalent une exclusion mutuelle. Les espèces proches du centre sont peu informatives sur ces deux axes principaux.</span>
                             <span class="lang-en"><b>PCA Correlation Circle:</b> Each arrow represents a plankton species. Its length indicates how much this species contributes to differentiating stations: a long arrow = a highly discriminating species. The direction reveals relationships: parallel arrows indicate species that systematically coexist (positively correlated), while opposing arrows signal mutual exclusion. Species near the center provide little information on these two main axes.</span>
@@ -258,8 +304,8 @@
             <!-- Slide 5: Jalon 1 - K-Means -->
             <section>
                 <div class="source-badge">
-                    <span class="lang-fr">Jalon 1 • analyse_planctons.ipynb</span>
-                    <span class="lang-en">Milestone 1 • analyse_planctons.ipynb</span>
+                    <span class="lang-fr">Jalon 1 • 01_exploration_baseline.ipynb</span>
+                    <span class="lang-en">Milestone 1 • 01_exploration_baseline.ipynb</span>
                 </div>
                 <h2>
                     <span class="lang-fr">Étape 2b : Une Première Partition — K-Means</span>
@@ -268,7 +314,7 @@
                 <div class="content-grid">
                     <div class="text-block lang-fr">
                         <p>Une fois les données réduites par ACP, nous avons appliqué l'algorithme <b>K-Means</b> pour regrouper automatiquement les stations similaires. K-Means cherche à partitionner les données en <em>k</em> groupes en minimisant la distance de chaque point à son centroïde de cluster.</p>
-                        <p>Pour déterminer le nombre optimal de groupes, nous avons évalué trois critères complémentaires : le <b>score de silhouette</b> (cohésion intra-cluster vs. séparation inter-clusters), l'<b>indice de Davies-Bouldin</b> (plus bas = meilleure séparation) et l'<b>indice de Calinski-Harabasz</b> (plus élevé = clusters plus denses). Le score de silhouette a guidé notre choix final.</p>
+                        <p>Pour déterminer le nombre optimal de groupes, nous avons testé k de 2 à 10 avec trois critères complémentaires. La <b>méthode du coude</b> (inertie intra-clusters) révèle un <b>point d'inflexion net à k=7</b> : au-delà, le gain de compacité devient marginal. Le <b>score de silhouette</b> atteint son maximum à k=7 (0,31), confirmant la meilleure séparation inter-clusters. L'<b>indice de Davies-Bouldin</b> est également minimisé à k=7. Ces trois signaux convergent vers <b>K = 7</b> comme nombre optimal de provinces biologiques.</p>
                         <p>Chaque cluster peut être nommé par ses <b>taxons dominants</b> : les groupes planctoniques dont la valeur Hellinger moyenne est la plus élevée dans ce cluster. Cela permet de passer de groupes anonymes à de véritables <b>profils biologiques</b>.</p>
                         <div class="glass-card">
                             <p><b>Limites du K-Means :</b> il impose un nombre de groupes fixé à l'avance, suppose des clusters de forme sphérique, et force chaque observation dans exactement un groupe — sans possibilité de signaler les zones de transition ni les points atypiques. Les méthodes de densité (HDBSCAN, OPTICS) révèleront que 75 % des stations occupent des zones de transition, confirmant que les données forment un continuum plutôt que des groupes bien séparés. C'est pour dépasser ces limites que nous avons exploré DBSCAN et GMM.</p>
@@ -276,17 +322,22 @@
                     </div>
                     <div class="text-block lang-en">
                         <p>Once the data was reduced by PCA, we applied the <b>K-Means</b> algorithm to automatically group similar stations. K-Means seeks to partition data into <em>k</em> groups by minimizing the distance of each point to its cluster centroid.</p>
-                        <p>To determine the optimal number of groups, we evaluated three complementary criteria: the <b>silhouette score</b> (intra-cluster cohesion vs. inter-cluster separation), the <b>Davies-Bouldin index</b> (lower = better separation) and the <b>Calinski-Harabasz index</b> (higher = denser clusters). The silhouette score guided our final choice.</p>
+                        <p>To determine the optimal number of groups, we tested k from 2 to 10 using three complementary criteria. The <b>elbow method</b> (intra-cluster inertia) reveals a <b>clear inflection point at k=7</b>: beyond that, the compactness gain becomes marginal. The <b>silhouette score</b> peaks at k=7 (0.31), confirming the best inter-cluster separation. The <b>Davies-Bouldin index</b> is also minimized at k=7. These three signals converge on <b>K = 7</b> as the optimal number of biological provinces.</p>
                         <p>Each cluster can be named by its <b>dominant taxa</b>: the plankton groups whose average Hellinger value is highest in that cluster. This allows moving from anonymous groups to true <b>biological profiles</b>.</p>
                         <div class="glass-card">
                             <p><b>Limitations of K-Means:</b> it requires a fixed number of groups set in advance, assumes spherically shaped clusters, and forces each observation into exactly one group — with no way to flag transition zones or outliers. Density-based methods (HDBSCAN, OPTICS) will reveal that 75% of stations occupy transition zones, confirming that the data forms a continuum rather than well-separated groups. It is to overcome these limitations that we explored DBSCAN and GMM.</p>
                         </div>
                     </div>
                     <div>
-                        <img src="figures/fig_11_kmeans_clusters.png" alt="K-Means clusters">
+                        <img src="figures/fig_10_kmeans_metriques.png" alt="Détermination du nombre optimal de clusters" style="width: 75%; display: block; margin: 0 auto;">
                         <p class="fig-caption">
-                            <span class="lang-fr"><b>Résultat du K-Means :</b> Le panneau supérieur projette les clusters dans l'espace ACP (PC1 × PC2) — chaque couleur représente un groupe homogène de stations. Le panneau inférieur cartographie ces groupes géographiquement : on distingue des régions océaniques cohérentes (zones tropicales, tempérées, polaires). Le nombre optimal de clusters a été déterminé par le score de silhouette, révélant les grandes provinces biologiques structurées par les gradients de température et de profondeur.</span>
-                            <span class="lang-en"><b>K-Means Result:</b> The upper panel projects clusters into the PCA space (PC1 × PC2) — each color represents a homogeneous group of stations. The lower panel maps these groups geographically: distinct oceanic regions are visible (tropical, temperate, polar zones). The optimal number of clusters was determined by the silhouette score, revealing the major biological provinces structured by temperature and depth gradients.</span>
+                            <span class="lang-fr"><b>Pourquoi K = 7 ?</b> Quatre critères évalués de k=2 à k=10. <em>En haut à gauche</em> — méthode du coude : l'inertie chute fortement jusqu'à k=7, puis se stabilise (point d'inflexion). <em>En haut à droite</em> — score de silhouette : maximum à k=7 (0,31), traduisant la meilleure cohésion intra-cluster. <em>En bas à gauche</em> — Davies-Bouldin : minimum à k=7, soit la meilleure séparation inter-clusters. Ces trois signaux convergents ont guidé le choix de <b>K=7</b>.</span>
+                            <span class="lang-en"><b>Why K = 7?</b> Four criteria evaluated from k=2 to k=10. <em>Top left</em> — elbow method: inertia drops sharply up to k=7, then flattens (inflection point). <em>Top right</em> — silhouette score: maximum at k=7 (0.31), reflecting the best intra-cluster cohesion. <em>Bottom left</em> — Davies-Bouldin: minimum at k=7, i.e. the best inter-cluster separation. These three convergent signals guided the choice of <b>K=7</b>.</span>
+                        </p>
+                        <img src="figures/fig_11_kmeans_clusters.png" alt="K-Means clusters" style="margin-top: 12px;">
+                        <p class="fig-caption">
+                            <span class="lang-fr"><b>Résultat :</b> 7 provinces biologiques projetées dans l'espace ACP (haut) et cartographiées géographiquement (bas) — zones tropicales, tempérées et polaires nettement différenciées.</span>
+                            <span class="lang-en"><b>Result:</b> 7 biological provinces projected in PCA space (top) and mapped geographically (bottom) — tropical, temperate, and polar zones clearly differentiated.</span>
                         </p>
                     </div>
                 </div>
@@ -333,117 +384,102 @@
                 </p>
             </section>
 
-            <!-- Slide 7: Jalon 3 - DBSCAN -->
+            <!-- Slide 7: Jalon 3 - DBSCAN + HDBSCAN + OPTICS -->
             <section>
                 <div class="source-badge">
                     <span class="lang-fr">Jalon 3 • analyse_planctons.ipynb</span>
                     <span class="lang-en">Milestone 3 • analyse_planctons.ipynb</span>
                 </div>
                 <h2>
-                    <span class="lang-fr">Étape 4 : Identifier les Familles — DBSCAN</span>
-                    <span class="lang-en">Step 4: Identify Families — DBSCAN</span>
+                    <span class="lang-fr">Étape 4 : Clustering par Densité — DBSCAN, HDBSCAN &amp; OPTICS</span>
+                    <span class="lang-en">Step 4: Density-Based Clustering — DBSCAN, HDBSCAN &amp; OPTICS</span>
                 </h2>
                 <div class="content-grid">
-                    <div class="text-block lang-fr">
-                        <p><b>DBSCAN</b> (<em>Density-Based Spatial Clustering of Applications with Noise</em>) travaille par <b>densité locale</b> : il identifie les zones où les stations sont concentrées, et laisse de côté les points trop isolés qu'il étiquette comme "bruit". Deux paramètres clés — <em>ε</em> (rayon de voisinage) et <em>min_samples</em> (seuil de densité) — ont été déterminés par une recherche sur grille basée sur le graphe des distances k-NN.</p>
-                        <p>Ce "bruit" n'est pas un défaut — c'est une <b>information précieuse</b>. Ces stations isolées correspondent souvent à des zones de transition entre deux masses d'eau, à des événements ponctuels (upwelling, bloom algal) ou à des échantillons prélevés dans des conditions exceptionnelles. Leur localisation géographique révèle les <b>frontières écologiques</b> de l'océan.</p>
-                        <p>Pour chaque cluster, nous avons identifié les <b>taxons dominants</b> (top 3 en valeur Hellinger moyenne) permettant de nommer biologiquement chaque province : cluster à dominance Copepoda, cluster à dominance Rhizaria, zone de mélange Chaetognatha–Mollusca, etc.</p>
-                    </div>
-                    <div class="text-block lang-en">
-                        <p><b>DBSCAN</b> (<em>Density-Based Spatial Clustering of Applications with Noise</em>) works by <b>local density</b>: it identifies zones where stations are concentrated, and sets aside points that are too isolated, labeling them as "noise". Two key parameters — <em>ε</em> (neighborhood radius) and <em>min_samples</em> (density threshold) — were determined by a grid search based on the k-NN distance graph.</p>
-                        <p>This "noise" is not a flaw — it is <b>precious information</b>. These isolated stations often correspond to transition zones between two water masses, punctual events (upwelling, algal bloom) or samples collected under exceptional conditions. Their geographic location reveals the <b>ecological boundaries</b> of the ocean.</p>
-                        <p>For each cluster, we identified the <b>dominant taxa</b> (top 3 by mean Hellinger value) allowing each province to be biologically named: Copepoda-dominated cluster, Rhizaria-dominated cluster, Chaetognatha–Mollusca mixing zone, etc.</p>
+                    <div>
+                        <div class="method-card" style="margin-bottom: 16px;">
+                            <h3>DBSCAN</h3>
+                            <div class="text-block lang-fr">
+                                <p>Travaille par <b>densité locale</b> avec deux paramètres fixes : <em>ε</em> (rayon de voisinage) et <em>min_samples</em>, déterminés par le graphe k-NN. Les points isolés sont étiquetés "bruit" — des zones de transition écologique précieuses.</p>
+                            </div>
+                            <div class="text-block lang-en">
+                                <p>Works by <b>local density</b> with two fixed parameters: <em>ε</em> (neighborhood radius) and <em>min_samples</em>, determined by the k-NN graph. Isolated points are labeled "noise" — precious ecological transition zones.</p>
+                            </div>
+                        </div>
+                        <div class="method-card" style="margin-bottom: 16px;">
+                            <h3>HDBSCAN</h3>
+                            <div class="text-block lang-fr">
+                                <p>Extension <b>hiérarchique</b> de DBSCAN : construit un arbre de densités décroissantes et extrait automatiquement les clusters les plus stables. Aucun seuil ε fixe — les structures émergent naturellement à différentes densités.</p>
+                            </div>
+                            <div class="text-block lang-en">
+                                <p><b>Hierarchical</b> extension of DBSCAN: builds a tree of decreasing densities and automatically extracts the most stable clusters. No fixed ε threshold — structures emerge naturally at different densities.</p>
+                            </div>
+                        </div>
+                        <div class="method-card">
+                            <h3>OPTICS</h3>
+                            <div class="text-block lang-fr">
+                                <p>Produit un <b>graphe d'accessibilité</b> ordonné plutôt qu'une partition directe, révélant la structure hiérarchique complète des densités. Particulièrement utile pour visualiser les <em>transitions graduelles</em> entre provinces.</p>
+                            </div>
+                            <div class="text-block lang-en">
+                                <p>Produces an ordered <b>reachability plot</b> rather than a direct partition, revealing the full hierarchical density structure. Particularly useful for visualizing <em>gradual transitions</em> between provinces.</p>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <img src="figures/fig_19_dbscan.png" alt="Groupes DBSCAN">
                         <p class="fig-caption">
-                            <span class="lang-fr"><b>Résultat DBSCAN :</b> Le panneau gauche (graphe k-NN) montre le critère de choix de ε — la courbe s'inflexe là où la densité chute, signalant la frontière naturelle entre clusters et bruit. Le panneau central projette les clusters dans l'espace ACP : chaque couleur est une province biologique, les points gris sont le bruit. Le panneau droit montre le profil biologique moyen (heatmap Hellinger) de chaque cluster, révélant les taxons dominants qui définissent chaque groupe.</span>
-                            <span class="lang-en"><b>DBSCAN Result:</b> The left panel (k-NN graph) shows the criterion for choosing ε — the curve inflects where density drops, signaling the natural boundary between clusters and noise. The central panel projects clusters into PCA space: each color is a biological province, grey dots are noise. The right panel shows the mean biological profile (Hellinger heatmap) for each cluster, revealing the dominant taxa that define each group.</span>
+                            <span class="lang-fr"><b>Résultat DBSCAN :</b> Le panneau gauche (graphe k-NN) montre le critère de choix de ε. Le panneau central projette les clusters dans l'espace ACP — chaque couleur est une province biologique, les points gris sont le bruit. Le panneau droit affiche le profil Hellinger moyen de chaque cluster, révélant les taxons dominants.</span>
+                            <span class="lang-en"><b>DBSCAN Result:</b> The left panel (k-NN graph) shows the ε selection criterion. The central panel projects clusters into PCA space — each color is a biological province, grey dots are noise. The right panel shows the mean Hellinger profile for each cluster, revealing dominant taxa.</span>
                         </p>
                     </div>
                 </div>
             </section>
 
-            <!-- Slide 8: Jalon 3 - GMM -->
+            <!-- Slide 8: Jalon 3 - GMM + Spectral Clustering -->
             <section>
                 <div class="source-badge">
                     <span class="lang-fr">Jalon 3 • analyse_planctons.ipynb</span>
                     <span class="lang-en">Milestone 3 • analyse_planctons.ipynb</span>
                 </div>
                 <h2>
-                    <span class="lang-fr">Étape 5 : Accepter l'Incertitude — GMM</span>
-                    <span class="lang-en">Step 5: Embrace Uncertainty — GMM</span>
+                    <span class="lang-fr">Étape 5 : Au-delà de la Densité — GMM &amp; Spectral Clustering</span>
+                    <span class="lang-en">Step 5: Beyond Density — GMM &amp; Spectral Clustering</span>
                 </h2>
                 <div class="content-grid">
-                    <div class="text-block lang-fr">
-                        <p>Jusqu'ici, chaque station était assignée à <em>un seul</em> groupe. Mais la réalité marine est plus nuancée : une station prélevée à la frontière de deux courants n'appartient pas franchement à l'un ou à l'autre.</p>
-                        <p>Le <b>GMM (Gaussian Mixture Model)</b> modélise chaque groupe comme une distribution gaussienne ("cloche") dans l'espace des données, et calcule une <b>probabilité d'appartenance</b> à chacun des groupes. Le critère BIC a sélectionné k = 18 composantes avec covariance full, soit 972 paramètres libres pour 4 264 observations — un sur-ajustement manifeste. Une covariance 'diag' ou 'sphérique' aurait réduit ce nombre à ~180 ou ~28 respectivement et constitue une piste d'amélioration directe non explorée dans ce TER.</p>
-                        <p>Une station peut appartenir à 70 % au groupe "eaux tropicales chaudes" et à 30 % au groupe "eaux de surface tempérées". Ce n'est pas de l'indécision — c'est de la <b>précision biologique</b>. Les <b>zones de fort chevauchement</b> (incertitude élevée) correspondent systématiquement aux fronts océaniques : des carrefours écologiques où plusieurs communautés coexistent et se mélangent sous l'effet des courants.</p>
-                    </div>
-                    <div class="text-block lang-en">
-                        <p>Until now, each station was assigned to <em>a single</em> group. But marine reality is more nuanced: a station sampled at the boundary of two currents does not clearly belong to either one.</p>
-                        <p>The <b>GMM (Gaussian Mixture Model)</b> models each group as a Gaussian distribution ("bell curve") in the data space, and computes a <b>membership probability</b> for each group. The BIC criterion selected k = 18 components with full covariance, i.e. 972 free parameters for 4,264 observations — a manifest overfitting. A 'diag' or 'spherical' covariance would have reduced this number to ~180 or ~28 respectively and represents a direct improvement path not explored in this TER.</p>
-                        <p>A station can belong 70% to the "warm tropical waters" group and 30% to the "temperate surface waters" group. This is not indecision — it is <b>biological precision</b>. <b>High-overlap zones</b> (high uncertainty) systematically correspond to oceanic fronts: ecological crossroads where several communities coexist and mix under the influence of currents.</p>
+                    <div>
+                        <div class="method-card" style="margin-bottom: 16px;">
+                            <h3>GMM — Gaussian Mixture Model</h3>
+                            <div class="text-block lang-fr">
+                                <p>Chaque groupe est modélisé comme une <b>distribution gaussienne</b> dans l'espace des données. Le GMM calcule une <b>probabilité d'appartenance</b> à chaque groupe plutôt qu'une affectation stricte.</p>
+                                <p>Le critère BIC a sélectionné k = 18 composantes (covariance full, 972 paramètres libres pour 4 264 observations). Les <b>zones d'incertitude élevée</b> (P ≈ 0,5) coïncident avec les fronts océaniques, carrefours de plusieurs communautés.</p>
+                            </div>
+                            <div class="text-block lang-en">
+                                <p>Each group is modeled as a <b>Gaussian distribution</b> in data space. GMM computes a <b>membership probability</b> for each group rather than a hard assignment.</p>
+                                <p>The BIC criterion selected k = 18 components (full covariance, 972 free parameters for 4,264 observations). <b>High-uncertainty zones</b> (P ≈ 0.5) coincide with oceanic fronts, crossroads of several communities.</p>
+                            </div>
+                        </div>
+                        <div class="method-card">
+                            <h3>Spectral Clustering</h3>
+                            <div class="text-block lang-fr">
+                                <p>Construit un <b>graphe de similarité</b> entre stations, puis applique un clustering sur les vecteurs propres du Laplacien de ce graphe. Capable de détecter des structures <b>non convexes et complexes</b> inaccessibles à K-Means.</p>
+                                <p>Particulièrement adapté aux <em>structures géométriques enchevêtrées</em> (anneaux, croissants, couches imbriquées) correspondant à des filaments de courants marins ou à des gradients de profondeur complexes.</p>
+                            </div>
+                            <div class="text-block lang-en">
+                                <p>Builds a <b>similarity graph</b> between stations, then applies clustering on the eigenvectors of the graph Laplacian. Able to detect <b>non-convex and complex structures</b> inaccessible to K-Means.</p>
+                                <p>Particularly suited to <em>entangled geometric structures</em> (rings, crescents, nested layers) corresponding to marine current filaments or complex depth gradients.</p>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <img src="figures/fig_24_gmm.png" alt="GMM probabilités">
                         <p class="fig-caption">
-                            <span class="lang-fr"><b>Analyse GMM :</b> En haut, les courbes BIC et AIC en fonction du nombre de composantes k (jusqu'à 20) : le minimum BIC indique le k optimal — si la courbe se stabilise avant 20, les données ne justifient pas une granularité plus fine. En bas à gauche, les clusters GMM dans l'espace ACP avec le type de covariance retenu. En bas à droite, la carte d'incertitude : les points rouges (P ≈ 0,5) signalent les zones de transition biologiquement actives — upwellings, fronts thermiques, mélanges de masses d'eau.</span>
-                            <span class="lang-en"><b>GMM Analysis:</b> At top, BIC and AIC curves as a function of the number of components k (up to 20): the BIC minimum indicates the optimal k — if the curve stabilizes before 20, the data does not justify finer granularity. Bottom left, GMM clusters in PCA space with the retained covariance type. Bottom right, the uncertainty map: red dots (P ≈ 0.5) signal biologically active transition zones — upwellings, thermal fronts, water mass mixing.</span>
+                            <span class="lang-fr"><b>Analyse GMM :</b> En haut, les courbes BIC et AIC selon le nombre de composantes k — le minimum BIC indique le k optimal. En bas à gauche, les clusters GMM dans l'espace ACP. En bas à droite, la carte d'incertitude : les points rouges (P ≈ 0,5) signalent les fronts océaniques biologiquement actifs.</span>
+                            <span class="lang-en"><b>GMM Analysis:</b> At top, BIC and AIC curves by number of components k — the BIC minimum indicates the optimal k. Bottom left, GMM clusters in PCA space. Bottom right, the uncertainty map: red dots (P ≈ 0.5) signal biologically active oceanic fronts.</span>
                         </p>
                     </div>
                 </div>
             </section>
 
-            <!-- Slide 9: Le Bilan -->
-            <section>
-                <div class="source-badge">
-                    <span class="lang-fr">Synthèse Comparative</span>
-                    <span class="lang-en">Comparative Summary</span>
-                </div>
-                <h2>
-                    <span class="lang-fr">Bilan : Quelle méthode retenir ?</span>
-                    <span class="lang-en">Summary: Which Method to Retain?</span>
-                </h2>
-                <div class="text-block lang-fr">
-                    <p>Six algorithmes mis en compétition, évalués par silhouette, Davies-Bouldin, Calinski-Harabasz et NMI — la NMI, calculée sur les seuls points assignés, est plus robuste que l'ARI pour comparer des algorithmes à taux de couverture hétérogènes :</p>
-                    <div class="glass-card">
-                        <ul>
-                            <li><b>K-Means :</b> Partition de référence, rapide. Impose des frontières convexes à une distribution que HDBSCAN et OPTICS révèlent être essentiellement continue (74,9 % de bruit) — les sept provinces sont des zones de référence opérationnelles, non des discontinuités naturelles.</li>
-                            <li><b>DBSCAN / HDBSCAN :</b> Détectent les structures à densité variable et isolent le bruit — précieux pour identifier les zones de transition et les événements ponctuels (upwelling, bloom).</li>
-                            <li><b>GMM :</b> Le plus réaliste biologiquement — modélise les chevauchements entre provinces et quantifie l'incertitude d'appartenance aux fronts océaniques.</li>
-                            <li><b>Spectral Clustering :</b> Capture les structures géométriques complexes non convexes, complémentaire des autres approches.</li>
-                        </ul>
-                    </div>
-                    <p>Au final, nous avons identifié <b>plusieurs grandes provinces biologiques stables</b>, caractérisées par des taxons dominants distincts :</p>
-                    <ul style="font-size: 0.68em; margin: 0 0 10px 20px;">
-                        <li><b>Provinces tropicales chaudes :</b> dominées par Rhizaria, Trichodesmium — eaux oligotrophes chaudes de surface.</li>
-                        <li><b>Provinces tempérées productives :</b> dominées par Copepoda, Chaetognatha — zones de fort upwelling et de forte productivité.</li>
-                        <li><b>Zones méso-pélagiques :</b> dominées par Appendicularia, Mollusca — couches intermédiaires, faible luminosité.</li>
-                        <li><b>Zones de transition / bruit DBSCAN :</b> signatures mixtes, fronts thermiques et courants de bord ouest.</li>
-                    </ul>
-                </div>
-                <div class="text-block lang-en">
-                    <p>Six algorithms in competition, evaluated by silhouette, Davies-Bouldin, Calinski-Harabasz and NMI — NMI, calculated on assigned points only, is more robust than ARI for comparing algorithms with heterogeneous coverage rates:</p>
-                    <div class="glass-card">
-                        <ul>
-                            <li><b>K-Means:</b> Reference partition, fast. Imposes convex boundaries on a distribution that HDBSCAN and OPTICS reveal to be essentially continuous (74.9% noise) — the seven provinces are operational reference zones, not natural discontinuities.</li>
-                            <li><b>DBSCAN / HDBSCAN:</b> Detect variable-density structures and isolate noise — valuable for identifying transition zones and punctual events (upwelling, bloom).</li>
-                            <li><b>GMM:</b> The most biologically realistic — models overlaps between provinces and quantifies membership uncertainty at oceanic fronts.</li>
-                            <li><b>Spectral Clustering:</b> Captures complex non-convex geometric structures, complementary to other approaches.</li>
-                        </ul>
-                    </div>
-                    <p>Ultimately, we identified <b>several stable major biological provinces</b>, characterized by distinct dominant taxa:</p>
-                    <ul style="font-size: 0.68em; margin: 0 0 10px 20px;">
-                        <li><b>Warm tropical provinces:</b> dominated by Rhizaria, Trichodesmium — warm oligotrophic surface waters.</li>
-                        <li><b>Productive temperate provinces:</b> dominated by Copepoda, Chaetognatha — strong upwelling and high productivity zones.</li>
-                        <li><b>Mesopelagic zones:</b> dominated by Appendicularia, Mollusca — intermediate layers, low luminosity.</li>
-                        <li><b>Transition / DBSCAN noise zones:</b> mixed signatures, thermal fronts and western boundary currents.</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Slide 10: Conclusion -->
+            <!-- Slide 9: Conclusion -->
             <section>
                 <div class="source-badge">
                     <span class="lang-fr">Conclusion Finale</span>
