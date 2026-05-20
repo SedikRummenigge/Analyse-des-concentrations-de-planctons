@@ -54,7 +54,7 @@
         }
 
         .text-block {
-            font-size: 0.76em;
+            font-size: 0.88em;
             line-height: 1.7;
             color: var(--text-main);
         }
@@ -68,7 +68,7 @@
             border-radius: 8px;
             background: rgba(16, 185, 129, 0.2);
             color: var(--accent-green);
-            font-size: 0.62em;
+            font-size: 0.72em;
             font-weight: 600;
             margin-bottom: 20px;
             text-transform: uppercase;
@@ -81,7 +81,7 @@
         }
 
         .fig-caption {
-            font-size: 0.6em;
+            font-size: 0.72em;
             color: var(--text-dim);
             text-align: center;
             margin-top: 15px;
@@ -137,14 +137,14 @@
         }
 
         .method-card h3 {
-            font-size: 0.78em;
+            font-size: 0.9em;
             font-weight: 700;
             color: var(--accent-blue);
             margin: 0 0 8px 0;
         }
 
         .method-card .text-block {
-            font-size: 0.63em;
+            font-size: 0.78em;
             line-height: 1.55;
         }
 
@@ -356,35 +356,33 @@
                 <div class="content-grid">
                     <div>
                         <div class="text-block lang-fr">
-                            <p>L'ACP suppose que les données s'organisent selon des axes droits. Mais la nature, elle, n'est pas toujours linéaire. Et si les communautés planctoniques s'organisaient en courbes, en spirales, en surfaces repliées sur elles-mêmes ?</p>
-                            <p>Nous avons testé trois méthodes alternatives :</p>
+                            <p>L'ACP suppose des structures linéaires. Trois méthodes non-linéaires ont été testées pour révéler la géométrie réelle des données :</p>
                             <ul style="margin: 0 0 12px 20px;">
-                                <li><b>Isomap</b> : calcule les distances entre stations en suivant la "surface" réelle des données, comme on mesurerait un chemin sur une montagne plutôt qu'à vol d'oiseau.</li>
-                                <li><b>LLE (Locally Linear Embedding)</b> : reconstruit chaque station à partir de ses voisines immédiates, comme un puzzle dont chaque pièce s'assemble localement.</li>
-                                <li><b>MDS non-métrique</b> : projette les données en 2D en préservant uniquement l'ordre des dissimilarités — sans forcer une échelle précise.</li>
+                                <li><b>Isomap</b> : distances géodésiques sur la surface des données.</li>
+                                <li><b>LLE</b> : reconstruction locale à partir des voisins immédiats.</li>
+                                <li><b>MDS non-métrique</b> : préservation de l'ordre des dissimilarités.</li>
                             </ul>
                             <div class="glass-card">
-                                <p><b>Résultat :</b> les communautés forment un <b>continuum</b> — pas des groupes discrets, mais des transitions douces le long de gradients environnementaux (température, profondeur, salinité). Les méthodes non-linéaires ont révélé des filaments que l'ACP n'aurait jamais montrés.</p>
+                                <p><b>Résultat :</b> les communautés forment un <b>continuum</b> — des transitions graduelles le long de gradients environnementaux, non des groupes discrets.</p>
                             </div>
                         </div>
                         <div class="text-block lang-en">
-                            <p>PCA assumes data organizes along straight axes. But nature is not always linear. What if planktonic communities organized themselves in curves, spirals, or surfaces folded upon themselves?</p>
-                            <p>We tested three alternative methods:</p>
+                            <p>PCA assumes linear structures. Three non-linear methods were tested to reveal the real geometry of the data:</p>
                             <ul style="margin: 0 0 12px 20px;">
-                                <li><b>Isomap</b>: computes distances between stations by following the "surface" of the actual data, like measuring a path on a mountain rather than as the crow flies.</li>
-                                <li><b>LLE (Locally Linear Embedding)</b>: reconstructs each station from its immediate neighbors, like a puzzle where each piece fits together locally.</li>
-                                <li><b>Non-metric MDS</b>: projects data into 2D while preserving only the order of dissimilarities — without forcing a precise scale.</li>
+                                <li><b>Isomap</b>: geodesic distances along the data surface.</li>
+                                <li><b>LLE</b>: local reconstruction from immediate neighbors.</li>
+                                <li><b>Non-metric MDS</b>: preservation of dissimilarity order.</li>
                             </ul>
                             <div class="glass-card">
-                                <p><b>Result:</b> communities form a <b>continuum</b> — not discrete groups, but smooth transitions along environmental gradients (temperature, depth, salinity). Non-linear methods revealed filaments that PCA would never have shown.</p>
+                                <p><b>Result:</b> communities form a <b>continuum</b> — gradual transitions along environmental gradients, not discrete groups.</p>
                             </div>
                         </div>
                     </div>
                     <div>
                         <img src="figures/fig_18_comparaison_representations.png" alt="Comparaison des représentations">
                         <p class="fig-caption">
-                            <span class="lang-fr"><b>Galerie comparative des projections 2D :</b> Chaque panneau projette les mêmes données selon une méthode différente. L'ACP (en haut à gauche) offre une vue linéaire et lisible, mais aplatit les structures courbes. L'Isomap et la LLE "déroulent" la géométrie réelle des données en respectant les distances locales : on y voit alors des filaments continus, qui correspondent aux gradients de température et de profondeur. Le MDS non-métrique confirme que la structure des données ressemble davantage à un continuum qu'à des groupes bien séparés.</span>
-                            <span class="lang-en"><b>Comparative Gallery of 2D Projections:</b> Each panel projects the same data using a different method. PCA (top left) offers a linear and readable view, but flattens curved structures. Isomap and LLE "unroll" the real geometry of the data by respecting local distances: continuous filaments become visible, corresponding to temperature and depth gradients. Non-metric MDS confirms that the data structure more closely resembles a continuum than well-separated groups.</span>
+                            <span class="lang-fr">Projections 2D comparées : ACP (linéaire), Isomap, LLE et MDS non-métrique sur les mêmes données.</span>
+                            <span class="lang-en">Compared 2D projections: PCA (linear), Isomap, LLE and non-metric MDS on the same data.</span>
                         </p>
                     </div>
                 </div>
@@ -405,36 +403,36 @@
                         <div class="method-card" style="margin-bottom: 16px;">
                             <h3>DBSCAN</h3>
                             <div class="text-block lang-fr">
-                                <p>Travaille par <b>densité locale</b> avec deux paramètres fixes : <em>ε</em> (rayon de voisinage) et <em>min_samples</em>, déterminés par le graphe k-NN. Les points isolés sont étiquetés "bruit" — des zones de transition écologique précieuses.</p>
+                                <p>Clustering par <b>densité locale</b> (paramètres ε et <em>min_samples</em>). Les points isolés — étiquetés "bruit" — correspondent aux zones de transition écologique.</p>
                             </div>
                             <div class="text-block lang-en">
-                                <p>Works by <b>local density</b> with two fixed parameters: <em>ε</em> (neighborhood radius) and <em>min_samples</em>, determined by the k-NN graph. Isolated points are labeled "noise" — precious ecological transition zones.</p>
+                                <p>Clustering by <b>local density</b> (parameters ε and <em>min_samples</em>). Isolated points — labeled "noise" — correspond to ecological transition zones.</p>
                             </div>
                         </div>
                         <div class="method-card" style="margin-bottom: 16px;">
                             <h3>HDBSCAN</h3>
                             <div class="text-block lang-fr">
-                                <p>Extension <b>hiérarchique</b> de DBSCAN : construit un arbre de densités décroissantes et extrait automatiquement les clusters les plus stables. Aucun seuil ε fixe — les structures émergent naturellement à différentes densités.</p>
+                                <p>Extension <b>hiérarchique</b> de DBSCAN : pas de seuil ε fixe, les clusters stables émergent automatiquement à différentes densités.</p>
                             </div>
                             <div class="text-block lang-en">
-                                <p><b>Hierarchical</b> extension of DBSCAN: builds a tree of decreasing densities and automatically extracts the most stable clusters. No fixed ε threshold — structures emerge naturally at different densities.</p>
+                                <p><b>Hierarchical</b> extension of DBSCAN: no fixed ε threshold, stable clusters emerge automatically at varying densities.</p>
                             </div>
                         </div>
                         <div class="method-card">
                             <h3>OPTICS</h3>
                             <div class="text-block lang-fr">
-                                <p>Produit un <b>graphe d'accessibilité</b> ordonné plutôt qu'une partition directe, révélant la structure hiérarchique complète des densités. Particulièrement utile pour visualiser les <em>transitions graduelles</em> entre provinces.</p>
+                                <p>Produit un <b>graphe d'accessibilité</b> ordonné révélant les transitions graduelles entre provinces, sans imposer de partition fixe.</p>
                             </div>
                             <div class="text-block lang-en">
-                                <p>Produces an ordered <b>reachability plot</b> rather than a direct partition, revealing the full hierarchical density structure. Particularly useful for visualizing <em>gradual transitions</em> between provinces.</p>
+                                <p>Produces an ordered <b>reachability plot</b> revealing gradual transitions between provinces, without imposing a fixed partition.</p>
                             </div>
                         </div>
                     </div>
                     <div>
                         <img src="figures/fig_19_dbscan.png" alt="Groupes DBSCAN">
                         <p class="fig-caption">
-                            <span class="lang-fr"><b>Résultat DBSCAN :</b> Le panneau gauche (graphe k-NN) montre le critère de choix de ε. Le panneau central projette les clusters dans l'espace ACP — chaque couleur est une province biologique, les points gris sont le bruit. Le panneau droit affiche le profil Hellinger moyen de chaque cluster, révélant les taxons dominants.</span>
-                            <span class="lang-en"><b>DBSCAN Result:</b> The left panel (k-NN graph) shows the ε selection criterion. The central panel projects clusters into PCA space — each color is a biological province, grey dots are noise. The right panel shows the mean Hellinger profile for each cluster, revealing dominant taxa.</span>
+                            <span class="lang-fr">Graphe k-NN (choix de ε), clusters projetés en ACP et profils Hellinger moyens par groupe.</span>
+                            <span class="lang-en">k-NN graph (ε selection), clusters projected in PCA space and mean Hellinger profiles per group.</span>
                         </p>
                     </div>
                 </div>
@@ -455,31 +453,27 @@
                         <div class="method-card" style="margin-bottom: 16px;">
                             <h3>GMM — Gaussian Mixture Model</h3>
                             <div class="text-block lang-fr">
-                                <p>Chaque groupe est modélisé comme une <b>distribution gaussienne</b> dans l'espace des données. Le GMM calcule une <b>probabilité d'appartenance</b> à chaque groupe plutôt qu'une affectation stricte.</p>
-                                <p>Le critère BIC a sélectionné k = 18 composantes (covariance full, 972 paramètres libres pour 4 264 observations). Les <b>zones d'incertitude élevée</b> (P ≈ 0,5) coïncident avec les fronts océaniques, carrefours de plusieurs communautés.</p>
+                                <p>Modélise chaque groupe comme une <b>distribution gaussienne</b> et calcule une <b>probabilité d'appartenance</b> plutôt qu'une affectation stricte. Les zones d'incertitude élevée (P ≈ 0,5) coïncident avec les fronts océaniques.</p>
                             </div>
                             <div class="text-block lang-en">
-                                <p>Each group is modeled as a <b>Gaussian distribution</b> in data space. GMM computes a <b>membership probability</b> for each group rather than a hard assignment.</p>
-                                <p>The BIC criterion selected k = 18 components (full covariance, 972 free parameters for 4,264 observations). <b>High-uncertainty zones</b> (P ≈ 0.5) coincide with oceanic fronts, crossroads of several communities.</p>
+                                <p>Models each group as a <b>Gaussian distribution</b> and computes a <b>membership probability</b> rather than a hard assignment. High-uncertainty zones (P ≈ 0.5) coincide with oceanic fronts.</p>
                             </div>
                         </div>
                         <div class="method-card">
                             <h3>Spectral Clustering</h3>
                             <div class="text-block lang-fr">
-                                <p>Construit un <b>graphe de similarité</b> entre stations, puis applique un clustering sur les vecteurs propres du Laplacien de ce graphe. Capable de détecter des structures <b>non convexes et complexes</b> inaccessibles à K-Means.</p>
-                                <p>Particulièrement adapté aux <em>structures géométriques enchevêtrées</em> (anneaux, croissants, couches imbriquées) correspondant à des filaments de courants marins ou à des gradients de profondeur complexes.</p>
+                                <p>Clustering sur les vecteurs propres d'un <b>graphe de similarité</b>. Détecte des structures <b>non convexes</b> inaccessibles à K-Means — filaments de courants, couches imbriquées.</p>
                             </div>
                             <div class="text-block lang-en">
-                                <p>Builds a <b>similarity graph</b> between stations, then applies clustering on the eigenvectors of the graph Laplacian. Able to detect <b>non-convex and complex structures</b> inaccessible to K-Means.</p>
-                                <p>Particularly suited to <em>entangled geometric structures</em> (rings, crescents, nested layers) corresponding to marine current filaments or complex depth gradients.</p>
+                                <p>Clustering on the eigenvectors of a <b>similarity graph</b>. Detects <b>non-convex structures</b> inaccessible to K-Means — current filaments, nested layers.</p>
                             </div>
                         </div>
                     </div>
                     <div>
                         <img src="figures/fig_24_gmm.png" alt="GMM probabilités">
                         <p class="fig-caption">
-                            <span class="lang-fr"><b>Analyse GMM :</b> En haut, les courbes BIC et AIC selon le nombre de composantes k — le minimum BIC indique le k optimal. En bas à gauche, les clusters GMM dans l'espace ACP. En bas à droite, la carte d'incertitude : les points rouges (P ≈ 0,5) signalent les fronts océaniques biologiquement actifs.</span>
-                            <span class="lang-en"><b>GMM Analysis:</b> At top, BIC and AIC curves by number of components k — the BIC minimum indicates the optimal k. Bottom left, GMM clusters in PCA space. Bottom right, the uncertainty map: red dots (P ≈ 0.5) signal biologically active oceanic fronts.</span>
+                            <span class="lang-fr">Courbes BIC/AIC, clusters ACP et carte d'incertitude — les points rouges (P ≈ 0,5) marquent les fronts océaniques.</span>
+                            <span class="lang-en">BIC/AIC curves, PCA clusters and uncertainty map — red dots (P ≈ 0.5) mark oceanic fronts.</span>
                         </p>
                     </div>
                 </div>
@@ -495,31 +489,15 @@
                     <span class="lang-fr">Conclusion &amp; Perspectives</span>
                     <span class="lang-en">Conclusion &amp; Perspectives</span>
                 </h2>
-                <div class="content-grid">
-                    <div class="text-block lang-fr">
-                        <p>Ce projet permet d'<b>automatiser la surveillance de la santé des océans</b>.</p>
-                        <p>La prochaine étape sera de lier ces groupes au <b>changement climatique</b>.</p>
-                        <div class="highlight-box">
-                            "Une base solide pour prédire l'avenir de nos écosystèmes marins."
-                        </div>
-                    </div>
-                    <div class="text-block lang-en">
-                        <p>This project enables <b>automated monitoring of ocean health</b>.</p>
-                        <p>The next step will be to link these groups to <b>climate change</b>.</p>
-                        <div class="highlight-box">
-                            "A solid foundation for predicting the future of our marine ecosystems."
-                        </div>
-                    </div>
-                    <div style="text-align: center;">
-                        <h3 style="color: var(--accent-blue); font-size: 1.5em; margin-bottom: 20px;">
-                            <span class="lang-fr">Merci !</span>
-                            <span class="lang-en">Thank you!</span>
-                        </h3>
-                        <p style="color: var(--text-dim); font-size: 0.65em;">
-                            <span class="lang-fr">Analyse des Concentrations de Planctons Marins<br>Projet 2026</span>
-                            <span class="lang-en">Analysis of Marine Plankton Concentrations<br>Project 2026</span>
-                        </p>
-                    </div>
+                <div style="text-align: center; margin-top: 60px;">
+                    <h3 style="color: var(--accent-blue); font-size: 2.5em; margin-bottom: 30px;">
+                        <span class="lang-fr">Merci !</span>
+                        <span class="lang-en">Thank you!</span>
+                    </h3>
+                    <p style="color: var(--text-dim); font-size: 0.85em;">
+                        <span class="lang-fr">Analyse des Concentrations de Planctons Marins — Projet 2026</span>
+                        <span class="lang-en">Analysis of Marine Plankton Concentrations — Project 2026</span>
+                    </p>
                 </div>
             </section>
 
