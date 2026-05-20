@@ -171,7 +171,27 @@
                 </div>
             </section>
 
-            <!-- Slide 5: Jalon 2 - La Recherche de Formes -->
+            <!-- Slide 5: Jalon 1 - K-Means -->
+            <section>
+                <div class="source-badge">Jalon 1 • analyse_planctons.ipynb</div>
+                <h2>Étape 2b : Une Première Partition — K-Means</h2>
+                <div class="content-grid">
+                    <div class="text-block">
+                        <p>Une fois les données réduites par ACP, nous avons appliqué l'algorithme <b>K-Means</b> pour regrouper automatiquement les stations similaires. K-Means cherche à partitionner les données en <em>k</em> groupes en minimisant la distance de chaque point à son centroïde de cluster.</p>
+                        <p>Pour déterminer le nombre optimal de groupes, nous avons évalué trois critères complémentaires : le <b>score de silhouette</b> (cohésion intra-cluster vs. séparation inter-clusters), l'<b>indice de Davies-Bouldin</b> (plus bas = meilleure séparation) et l'<b>indice de Calinski-Harabasz</b> (plus élevé = clusters plus denses). Le score de silhouette a guidé notre choix final.</p>
+                        <p>Chaque cluster peut être nommé par ses <b>taxons dominants</b> : les groupes planctoniques dont la valeur Hellinger moyenne est la plus élevée dans ce cluster. Cela permet de passer de groupes anonymes à de véritables <b>profils biologiques</b>.</p>
+                        <div class="glass-card">
+                            <p><b>Limites du K-Means :</b> il impose un nombre de groupes fixé à l'avance, suppose des clusters de forme sphérique, et force chaque observation dans exactement un groupe — sans possibilité de signaler les zones de transition ni les points atypiques. Les méthodes de densité (HDBSCAN, OPTICS) révèleront que 75 % des stations occupent des zones de transition, confirmant que les données forment un continuum plutôt que des groupes bien séparés. C'est pour dépasser ces limites que nous avons exploré DBSCAN et GMM.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="figures/fig_11_kmeans_clusters.png" alt="K-Means clusters">
+                        <p class="fig-caption"><b>Résultat du K-Means :</b> Le panneau supérieur projette les clusters dans l'espace ACP (PC1 × PC2) — chaque couleur représente un groupe homogène de stations. Le panneau inférieur cartographie ces groupes géographiquement : on distingue des régions océaniques cohérentes (zones tropicales, tempérées, polaires). Le nombre optimal de clusters a été déterminé par le score de silhouette, révélant les grandes provinces biologiques structurées par les gradients de température et de profondeur.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: Jalon 2 - La Recherche de Formes -->
             <section>
                 <div class="source-badge">Jalon 2 • 02_representations.ipynb</div>
                 <h2>Étape 3 : Explorer d'autres perspectives</h2>
@@ -191,58 +211,65 @@
                 <p class="fig-caption"><b>Galerie comparative des projections 2D :</b> Chaque panneau projette les mêmes données selon une méthode différente. L'ACP (en haut à gauche) offre une vue linéaire et lisible, mais aplatit les structures courbes. L'Isomap et la LLE "déroulent" la géométrie réelle des données en respectant les distances locales : on y voit alors des filaments continus, qui correspondent aux gradients de température et de profondeur. Le MDS non-métrique confirme que la structure des données ressemble davantage à un continuum qu'à des groupes bien séparés.</p>
             </section>
 
-            <!-- Slide 6: Jalon 3 - Créer les Groupes -->
+            <!-- Slide 7: Jalon 3 - DBSCAN -->
             <section>
-                <div class="source-badge">Jalon 3 • 03_clusterings.ipynb</div>
-                <h2>Étape 4 : Identifier les Familles</h2>
+                <div class="source-badge">Jalon 3 • analyse_planctons.ipynb</div>
+                <h2>Étape 4 : Identifier les Familles — DBSCAN</h2>
                 <div class="content-grid">
                     <div class="text-block">
-                        <p>Après avoir visualisé les données, l'objectif était de regrouper automatiquement les stations qui se ressemblent : c'est le principe du <b>clustering</b>. Mais tous les algorithmes ne se valent pas.</p>
-                        <p>Nous avons testé plusieurs approches, dont <b>DBSCAN</b> (<em>Density-Based Spatial Clustering of Applications with Noise</em>). À la différence du K-Means — qui impose un nombre de groupes fixé à l'avance et force chaque point dans un groupe — DBSCAN travaille par <b>densité locale</b> : il identifie des zones où les stations sont concentrées, et laisse de côté les points trop isolés, qu'il étiquette comme "bruit".</p>
-                        <p>Ce "bruit" n'est pas un défaut de l'algorithme — c'est une <b>information précieuse</b>. Ces stations isolées correspondent souvent à des zones de transition entre deux masses d'eau, à des événements ponctuels (upwelling, bloom algal), ou à des échantillons prélevés dans des conditions exceptionnelles.</p>
+                        <p><b>DBSCAN</b> (<em>Density-Based Spatial Clustering of Applications with Noise</em>) travaille par <b>densité locale</b> : il identifie les zones où les stations sont concentrées, et laisse de côté les points trop isolés qu'il étiquette comme "bruit". Deux paramètres clés — <em>ε</em> (rayon de voisinage) et <em>min_samples</em> (seuil de densité) — ont été déterminés par une recherche sur grille basée sur le graphe des distances k-NN.</p>
+                        <p>Ce "bruit" n'est pas un défaut — c'est une <b>information précieuse</b>. Ces stations isolées correspondent souvent à des zones de transition entre deux masses d'eau, à des événements ponctuels (upwelling, bloom algal) ou à des échantillons prélevés dans des conditions exceptionnelles. Leur localisation géographique révèle les <b>frontières écologiques</b> de l'océan.</p>
+                        <p>Pour chaque cluster, nous avons identifié les <b>taxons dominants</b> (top 3 en valeur Hellinger moyenne) permettant de nommer biologiquement chaque province : cluster à dominance Copepoda, cluster à dominance Rhizaria, zone de mélange Chaetognatha–Mollusca, etc.</p>
                     </div>
                     <div>
-                        <img src="figures/fig_19_dbscan.png" alt="Groupes">
-                        <p class="fig-caption"><b>Cartographie DBSCAN des Clusters :</b> Contrairement au K-Means qui force chaque point dans un groupe, DBSCAN identifie les clusters par densité : un groupe se forme là où les stations se ressemblent suffisamment et sont assez nombreuses. Chaque couleur correspond à une province biologique distincte. Les points gris sont le "bruit" — des stations isolées qui ne s'intègrent dans aucun groupe, souvent situées dans des zones de transition ou de mélange intense entre deux masses d'eau. Leur présence est une information en soi.</p>
+                        <img src="figures/fig_19_dbscan.png" alt="Groupes DBSCAN">
+                        <p class="fig-caption"><b>Résultat DBSCAN :</b> Le panneau gauche (graphe k-NN) montre le critère de choix de ε — la courbe s'inflexe là où la densité chute, signalant la frontière naturelle entre clusters et bruit. Le panneau central projette les clusters dans l'espace ACP : chaque couleur est une province biologique, les points gris sont le bruit. Le panneau droit montre le profil biologique moyen (heatmap Hellinger) de chaque cluster, révélant les taxons dominants qui définissent chaque groupe.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Slide 7: Jalon 3 - La Nuance Probabiliste -->
+            <!-- Slide 8: Jalon 3 - GMM -->
             <section>
-                <div class="source-badge">Jalon 3 • 03_clusterings.ipynb</div>
-                <h2>Étape 5 : Accepter l'Incertitude</h2>
+                <div class="source-badge">Jalon 3 • analyse_planctons.ipynb</div>
+                <h2>Étape 5 : Accepter l'Incertitude — GMM</h2>
                 <div class="content-grid">
                     <div class="text-block">
                         <p>Jusqu'ici, chaque station était assignée à <em>un seul</em> groupe. Mais la réalité marine est plus nuancée : une station prélevée à la frontière de deux courants n'appartient pas franchement à l'un ou à l'autre.</p>
-                        <p>Le <b>GMM (Gaussian Mixture Model)</b> aborde le problème différemment. Au lieu d'assigner chaque station à un groupe de manière rigide, il calcule une <b>probabilité d'appartenance</b> à chacun des groupes. Techniquement, il modélise chaque groupe comme une distribution gaussienne (une "cloche") dans l'espace des données, et cherche le mélange optimal de cloches pour expliquer l'ensemble des points.</p>
-                        <p>Une station peut donc appartenir à 70 % au groupe "eaux tropicales chaudes" et à 30 % au groupe "eaux de surface tempérées". Ce n'est pas de l'indécision — c'est de la <b>précision biologique</b>. Les zones de transition marine existent réellement, et le GMM est l'un des rares algorithmes à les représenter honnêtement.</p>
+                        <p>Le <b>GMM (Gaussian Mixture Model)</b> modélise chaque groupe comme une distribution gaussienne ("cloche") dans l'espace des données, et calcule une <b>probabilité d'appartenance</b> à chacun des groupes. Le critère BIC a sélectionné k = 18 composantes avec covariance full, soit 972 paramètres libres pour 4 264 observations — un sur-ajustement manifeste. Une covariance 'diag' ou 'sphérique' aurait réduit ce nombre à ~180 ou ~28 respectivement et constitue une piste d'amélioration directe non explorée dans ce TER.</p>
+                        <p>Une station peut appartenir à 70 % au groupe "eaux tropicales chaudes" et à 30 % au groupe "eaux de surface tempérées". Ce n'est pas de l'indécision — c'est de la <b>précision biologique</b>. Les <b>zones de fort chevauchement</b> (incertitude élevée) correspondent systématiquement aux fronts océaniques : des carrefours écologiques où plusieurs communautés coexistent et se mélangent sous l'effet des courants.</p>
                     </div>
                     <div>
-                        <img src="figures/fig_24_gmm.png" alt="Probabilités">
-                        <p class="fig-caption"><b>Analyse du GMM (Gaussian Mixture Model) :</b> Le graphique de gauche montre les clusters GMM dans l'espace réduit de l'ACP : chaque couleur est un groupe, mais les frontières sont floues par nature. Le graphique de droite visualise l'<em>entropie d'appartenance</em> — une mesure d'incertitude : un point bleu est clairement assigné à un seul groupe, un point rouge hésite fortement entre deux groupes. On remarque que cette incertitude est maximale aux zones de transition entre courants marins, ce qui est biologiquement cohérent : ces zones sont de véritables carrefours écologiques où plusieurs espèces se mélangent.</p>
+                        <img src="figures/fig_24_gmm.png" alt="GMM probabilités">
+                        <p class="fig-caption"><b>Analyse GMM :</b> En haut, les courbes BIC et AIC en fonction du nombre de composantes k (jusqu'à 20) : le minimum BIC indique le k optimal — si la courbe se stabilise avant 20, les données ne justifient pas une granularité plus fine. En bas à gauche, les clusters GMM dans l'espace ACP avec le type de covariance retenu. En bas à droite, la carte d'incertitude : les points rouges (P ≈ 0,5) signalent les zones de transition biologiquement actives — upwellings, fronts thermiques, mélanges de masses d'eau.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Slide 8: Le Bilan -->
+            <!-- Slide 9: Le Bilan -->
             <section>
                 <div class="source-badge">Synthèse Comparative</div>
                 <h2>Bilan : Quelle méthode retenir ?</h2>
                 <div class="text-block">
-                    <p>Nous avons mis en compétition tous nos modèles :</p>
+                    <p>Six algorithmes mis en compétition, évalués par silhouette, Davies-Bouldin, Calinski-Harabasz et NMI — la NMI, calculée sur les seuls points assignés, est plus robuste que l'ARI pour comparer des algorithmes à taux de couverture hétérogènes :</p>
                     <div class="glass-card">
                         <ul>
-                            <li><b>K-Means :</b> Efficace pour une première vue.</li>
-                            <li><b>GMM :</b> Le plus réaliste (chevauchements).</li>
-                            <li><b>Spectral Clustering :</b> Pour les structures complexes.</li>
+                            <li><b>K-Means :</b> Partition de référence, rapide. Impose des frontières convexes à une distribution que HDBSCAN et OPTICS révèlent être essentiellement continue (74,9 % de bruit) — les sept provinces sont des zones de référence opérationnelles, non des discontinuités naturelles.</li>
+                            <li><b>DBSCAN / HDBSCAN :</b> Détectent les structures à densité variable et isolent le bruit — précieux pour identifier les zones de transition et les événements ponctuels (upwelling, bloom).</li>
+                            <li><b>GMM :</b> Le plus réaliste biologiquement — modélise les chevauchements entre provinces et quantifie l'incertitude d'appartenance aux fronts océaniques.</li>
+                            <li><b>Spectral Clustering :</b> Capture les structures géométriques complexes non convexes, complémentaire des autres approches.</li>
                         </ul>
                     </div>
-                    <p>Au final, nous avons identifié <b>7 grandes provinces biologiques</b> stables.</p>
+                    <p>Au final, nous avons identifié <b>plusieurs grandes provinces biologiques stables</b>, caractérisées par des taxons dominants distincts :</p>
+                    <ul style="font-size: 0.6em; margin: 0 0 10px 20px;">
+                        <li><b>Provinces tropicales chaudes :</b> dominées par Rhizaria, Trichodesmium — eaux oligotrophes chaudes de surface.</li>
+                        <li><b>Provinces tempérées productives :</b> dominées par Copepoda, Chaetognatha — zones de fort upwelling et de forte productivité.</li>
+                        <li><b>Zones méso-pélagiques :</b> dominées par Appendicularia, Mollusca — couches intermédiaires, faible luminosité.</li>
+                        <li><b>Zones de transition / bruit DBSCAN :</b> signatures mixtes, fronts thermiques et courants de bord ouest.</li>
+                    </ul>
                 </div>
             </section>
 
-            <!-- Slide 9: Conclusion -->
+            <!-- Slide 10: Conclusion -->
             <section>
                 <div class="source-badge">Conclusion Finale</div>
                 <h2>Conclusion & Perspectives</h2>
@@ -277,6 +304,9 @@
             progress: true,
             center: true,
             transition: 'none',
+            width: 1200,
+            height: 700,
+            margin: 0.02,
             plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
         });
     </script>
