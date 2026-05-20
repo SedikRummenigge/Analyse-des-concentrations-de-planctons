@@ -54,7 +54,7 @@
         }
 
         .text-block {
-            font-size: 0.65em;
+            font-size: 0.76em;
             line-height: 1.7;
             color: var(--text-main);
         }
@@ -68,7 +68,7 @@
             border-radius: 8px;
             background: rgba(16, 185, 129, 0.2);
             color: var(--accent-green);
-            font-size: 0.5em;
+            font-size: 0.62em;
             font-weight: 600;
             margin-bottom: 20px;
             text-transform: uppercase;
@@ -81,7 +81,7 @@
         }
 
         .fig-caption {
-            font-size: 0.5em;
+            font-size: 0.6em;
             color: var(--text-dim);
             text-align: center;
             margin-top: 15px;
@@ -95,30 +95,71 @@
             margin: 20px 0;
             font-style: italic;
         }
+
+        /* Bouton bascule de langue */
+        .lang-toggle {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 10000;
+            background: rgba(0, 210, 255, 0.15);
+            border: 2px solid var(--accent-blue);
+            color: var(--accent-blue);
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9em;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .lang-toggle:hover {
+            background: rgba(0, 210, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .lang-en { display: none; }
     </style>
 </head>
 <body>
+    <button class="lang-toggle" id="langBtn" onclick="toggleLang()">EN</button>
+
     <div class="reveal">
         <div class="slides">
 
             <!-- Slide 1: Introduction -->
             <section>
-                <div class="source-badge">Introduction Globale</div>
+                <div class="source-badge">
+                    <span class="lang-fr">Introduction Globale</span>
+                    <span class="lang-en">Global Introduction</span>
+                </div>
                 <div class="glass-card" style="text-align: center;">
-                    <h1 style="font-size: 2em; margin-bottom: 20px;">Comprendre les Écosystèmes Marins</h1>
-                    <div class="text-block" style="text-align: center; font-size: 0.8em;">
-                        <p>Le plancton est le poumon de notre planète, mais ses communautés sont complexes et varient selon les océans. Notre mission : <b>cartographier ces communautés</b> à partir de 11 ans de données récoltées par 37 expéditions mondiales.</p>
-                        <p>Nous avons utilisé l'intelligence artificielle pour identifier des "provinces" biologiques cohérentes, permettant de mieux comprendre comment la vie marine s'organise face aux conditions environnementales.</p>
+                    <h1 style="font-size: 2em; margin-bottom: 20px;">
+                        <span class="lang-fr">Comprendre les Écosystèmes Marins</span>
+                        <span class="lang-en">Understanding Marine Ecosystems</span>
+                    </h1>
+                    <div class="text-block" style="text-align: center; font-size: 0.88em;">
+                        <p class="lang-fr">Le plancton est le poumon de notre planète, mais ses communautés sont complexes et varient selon les océans. Notre mission : <b>cartographier ces communautés</b> à partir de 11 ans de données récoltées par 37 expéditions mondiales.</p>
+                        <p class="lang-en">Plankton is the lungs of our planet, but its communities are complex and vary across oceans. Our mission: <b>map these communities</b> from 11 years of data collected by 37 worldwide expeditions.</p>
+                        <p class="lang-fr">Nous avons utilisé l'intelligence artificielle pour identifier des "provinces" biologiques cohérentes, permettant de mieux comprendre comment la vie marine s'organise face aux conditions environnementales.</p>
+                        <p class="lang-en">We used artificial intelligence to identify coherent biological "provinces", allowing us to better understand how marine life organizes itself in response to environmental conditions.</p>
                     </div>
                 </div>
             </section>
 
             <!-- Slide 2: Présentation des Données -->
             <section>
-                <div class="source-badge">Le Jeu de Données • Panaïotis et al. (2023)</div>
-                <h2>Les Matériaux de l'Analyse</h2>
+                <div class="source-badge">
+                    <span class="lang-fr">Le Jeu de Données • Panaïotis et al. (2023)</span>
+                    <span class="lang-en">The Dataset • Panaïotis et al. (2023)</span>
+                </div>
+                <h2>
+                    <span class="lang-fr">Les Matériaux de l'Analyse</span>
+                    <span class="lang-en">Materials of the Analysis</span>
+                </h2>
                 <div class="content-grid">
-                    <div class="text-block">
+                    <div class="text-block lang-fr">
                         <p>Nos analyses reposent sur un jeu de données unique regroupant des mesures physiques et biologiques à l'échelle planétaire :</p>
                         <ul>
                             <li><b>Le Volet Biologique :</b> Concentrations de 19 groupes de zooplanctons (Copepoda, Collodaria, Mollusca, etc.), identifiés par imagerie.</li>
@@ -127,19 +168,37 @@
                         </ul>
                         <p>Chaque ligne de nos données représente une "signature" de l'état de l'océan à un instant T.</p>
                     </div>
+                    <div class="text-block lang-en">
+                        <p>Our analyses are based on a unique dataset combining physical and biological measurements at a planetary scale:</p>
+                        <ul>
+                            <li><b>The Biological Component:</b> Concentrations of 19 zooplankton groups (Copepoda, Collodaria, Mollusca, etc.), identified by imaging.</li>
+                            <li><b>The Environmental Component:</b> Temperature, Salinity, Oxygen and Chlorophyll, measured simultaneously at each sampling point.</li>
+                            <li><b>The Spatial & Temporal Component:</b> 37 global oceanographic campaigns spanning more than a decade.</li>
+                        </ul>
+                        <p>Each row in our data represents a "signature" of the ocean's state at a given moment T.</p>
+                    </div>
                     <div>
                         <img src="figures/fig_03_carte_spatiale.png" alt="Carte des données">
-                        <p class="fig-caption"><b>Distribution Mondiale des Stations :</b> Chaque point représente une station de prélèvement issue des 37 campagnes océanographiques. La carte montre une couverture planétaire remarquable : océans Atlantique, Pacifique, Indien, mer Méditerranée et zones polaires sont représentés. Cette diversité géographique est essentielle — elle garantit que nos résultats ne sont pas biaisés vers un seul type d'environnement marin et permettent d'identifier des structures biologiques vraiment universelles.</p>
+                        <p class="fig-caption">
+                            <span class="lang-fr"><b>Distribution Mondiale des Stations :</b> Chaque point représente une station de prélèvement issue des 37 campagnes océanographiques. La carte montre une couverture planétaire remarquable : océans Atlantique, Pacifique, Indien, mer Méditerranée et zones polaires sont représentés. Cette diversité géographique est essentielle — elle garantit que nos résultats ne sont pas biaisés vers un seul type d'environnement marin et permettent d'identifier des structures biologiques vraiment universelles.</span>
+                            <span class="lang-en"><b>Global Distribution of Stations:</b> Each dot represents a sampling station from the 37 oceanographic campaigns. The map shows remarkable global coverage: Atlantic, Pacific, Indian Oceans, the Mediterranean Sea and polar regions are all represented. This geographical diversity is essential — it ensures our results are not biased toward a single type of marine environment and allows identifying truly universal biological structures.</span>
+                        </p>
                     </div>
                 </div>
             </section>
 
             <!-- Slide 3: Jalon 1 - Le Nettoyage -->
             <section>
-                <div class="source-badge">Jalon 1 • 01_exploration_baseline.ipynb</div>
-                <h2>Étape 1 : Préparer et Normaliser</h2>
+                <div class="source-badge">
+                    <span class="lang-fr">Jalon 1 • 01_exploration_baseline.ipynb</span>
+                    <span class="lang-en">Milestone 1 • 01_exploration_baseline.ipynb</span>
+                </div>
+                <h2>
+                    <span class="lang-fr">Étape 1 : Préparer et Normaliser</span>
+                    <span class="lang-en">Step 1: Prepare and Normalize</span>
+                </h2>
                 <div class="content-grid">
-                    <div class="text-block">
+                    <div class="text-block lang-fr">
                         <p>Avant toute analyse, nous avons dû résoudre un problème fondamental : <b>l'hétérogénéité des données</b>. Certaines espèces de plancton, comme les Copepoda, sont omniprésentes et peuvent être comptées par centaines dans un même échantillon. D'autres, très rares, apparaissent à peine une ou deux fois sur l'ensemble du jeu de données.</p>
                         <p>Si l'on compare ces chiffres bruts directement, les espèces rares deviennent <b>invisibles</b> mathématiquement — écrasées par les valeurs des espèces dominantes. Ce n'est pas un problème de mesure, c'est un problème d'échelle.</p>
                         <div class="highlight-box">
@@ -147,36 +206,67 @@
                         </div>
                         <p>Concrètement : deux stations avec des populations très différentes en taille mais avec la <b>même composition relative</b> d'espèces seront désormais reconnues comme similaires. C'est cette notion de portrait de communauté — et non de volume — qui guide toute la suite de l'analyse.</p>
                     </div>
+                    <div class="text-block lang-en">
+                        <p>Before any analysis, we had to solve a fundamental problem: <b>data heterogeneity</b>. Some plankton species, like Copepoda, are ubiquitous and can be counted in the hundreds in a single sample. Others, very rare, barely appear once or twice across the entire dataset.</p>
+                        <p>If we compare these raw numbers directly, rare species become <b>invisible</b> mathematically — crushed by the values of dominant species. This is not a measurement problem, it is a scale problem.</p>
+                        <div class="highlight-box">
+                            "The Hellinger transformation solves this: for each station, we divide the concentration of each species by the total captured, then take the square root. The result is no longer a quantity, it is a <em>weighted proportion</em>."
+                        </div>
+                        <p>In practice: two stations with very different population sizes but the <b>same relative species composition</b> will now be recognized as similar. It is this notion of community portrait — rather than volume — that guides the entire analysis.</p>
+                    </div>
                     <div>
                         <img src="figures/fig_06_hellinger_transformation.png" alt="Nettoyage">
-                        <p class="fig-caption"><b>Comparaison Avant/Après la Transformation de Hellinger :</b> À gauche, les données brutes révèlent un déséquilibre criant : une ou deux espèces très abondantes (comme les Copepoda) dominent complètement l'échelle, rendant les autres espèces quasiment invisibles. À droite, après la transformation, chaque station est convertie en un <em>profil de présence relative</em> : peu importe la quantité totale capturée, c'est la composition de la communauté qui compte. Les espèces rares deviennent lisibles et comparables aux espèces dominantes.</p>
+                        <p class="fig-caption">
+                            <span class="lang-fr"><b>Comparaison Avant/Après la Transformation de Hellinger :</b> À gauche, les données brutes révèlent un déséquilibre criant : une ou deux espèces très abondantes (comme les Copepoda) dominent complètement l'échelle, rendant les autres espèces quasiment invisibles. À droite, après la transformation, chaque station est convertie en un <em>profil de présence relative</em> : peu importe la quantité totale capturée, c'est la composition de la communauté qui compte. Les espèces rares deviennent lisibles et comparables aux espèces dominantes.</span>
+                            <span class="lang-en"><b>Before/After Comparison of the Hellinger Transformation:</b> On the left, raw data reveals a stark imbalance: one or two highly abundant species (like Copepoda) completely dominate the scale, making other species nearly invisible. On the right, after transformation, each station is converted into a <em>relative presence profile</em>: regardless of the total quantity captured, it is the community composition that matters. Rare species become readable and comparable to dominant species.</span>
+                        </p>
                     </div>
                 </div>
             </section>
 
             <!-- Slide 4: Jalon 1 - Simplification -->
             <section>
-                <div class="source-badge">Jalon 1 • 01_exploration_baseline.ipynb</div>
-                <h2>Étape 2 : Simplifier pour Visualiser</h2>
+                <div class="source-badge">
+                    <span class="lang-fr">Jalon 1 • 01_exploration_baseline.ipynb</span>
+                    <span class="lang-en">Milestone 1 • 01_exploration_baseline.ipynb</span>
+                </div>
+                <h2>
+                    <span class="lang-fr">Étape 2 : Simplifier pour Visualiser</span>
+                    <span class="lang-en">Step 2: Simplify to Visualize</span>
+                </h2>
                 <div class="content-grid">
-                    <div class="text-block">
+                    <div class="text-block lang-fr">
                         <p>Nos données ont 19 dimensions — une par type de plancton. Impossible à visualiser directement. L'<b>Analyse en Composantes Principales (ACP)</b> est une technique qui compresse ces 19 dimensions en quelques grands axes, chacun capturant une partie de la variabilité totale des données.</p>
                         <p>Concrètement : au lieu de décrire une station par ses 19 concentrations d'espèces, on la décrit par sa position sur 2 ou 3 axes synthétiques. Ces axes ne correspondent pas à des espèces réelles, mais à des <b>combinaisons d'espèces</b> qui varient ensemble.</p>
                         <p><b>Ce que nous avons découvert :</b> nous avons conservé suffisamment d'axes pour expliquer <b>plus de 80 % de la variabilité</b> totale des données. Le premier axe traduit globalement la "richesse" et la densité du milieu marin. Le second révèle des oppositions biologiques claires : certaines espèces prospèrent dans les eaux froides profondes, d'autres dans les zones de surface chaudes et productives.</p>
                     </div>
+                    <div class="text-block lang-en">
+                        <p>Our data has 19 dimensions — one per plankton type. Impossible to visualize directly. <b>Principal Component Analysis (PCA)</b> is a technique that compresses these 19 dimensions into a few major axes, each capturing part of the total variability in the data.</p>
+                        <p>In practice: instead of describing a station by its 19 species concentrations, we describe it by its position on 2 or 3 synthetic axes. These axes do not correspond to real species, but to <b>combinations of species</b> that vary together.</p>
+                        <p><b>What we discovered:</b> we retained enough axes to explain <b>more than 80% of the total variability</b> in the data. The first axis broadly reflects the "richness" and density of the marine environment. The second reveals clear biological oppositions: some species thrive in cold deep waters, others in warm productive surface zones.</p>
+                    </div>
                     <div>
                         <img src="figures/fig_09_pca_cercle_correlations.png" alt="PCA">
-                        <p class="fig-caption"><b>Cercle des Corrélations de l'ACP :</b> Chaque flèche représente une espèce de plancton. Sa longueur indique à quel point cette espèce contribue à différencier les stations : une flèche longue = une espèce très discriminante. La direction révèle les relations : des flèches parallèles indiquent des espèces qui cohabitent systématiquement (corrélées positivement), tandis que des flèches opposées signalent une exclusion mutuelle. Les espèces proches du centre sont peu informatiques sur ces deux axes principaux.</p>
+                        <p class="fig-caption">
+                            <span class="lang-fr"><b>Cercle des Corrélations de l'ACP :</b> Chaque flèche représente une espèce de plancton. Sa longueur indique à quel point cette espèce contribue à différencier les stations : une flèche longue = une espèce très discriminante. La direction révèle les relations : des flèches parallèles indiquent des espèces qui cohabitent systématiquement (corrélées positivement), tandis que des flèches opposées signalent une exclusion mutuelle. Les espèces proches du centre sont peu informatives sur ces deux axes principaux.</span>
+                            <span class="lang-en"><b>PCA Correlation Circle:</b> Each arrow represents a plankton species. Its length indicates how much this species contributes to differentiating stations: a long arrow = a highly discriminating species. The direction reveals relationships: parallel arrows indicate species that systematically coexist (positively correlated), while opposing arrows signal mutual exclusion. Species near the center provide little information on these two main axes.</span>
+                        </p>
                     </div>
                 </div>
             </section>
 
             <!-- Slide 5: Jalon 1 - K-Means -->
             <section>
-                <div class="source-badge">Jalon 1 • analyse_planctons.ipynb</div>
-                <h2>Étape 2b : Une Première Partition — K-Means</h2>
+                <div class="source-badge">
+                    <span class="lang-fr">Jalon 1 • analyse_planctons.ipynb</span>
+                    <span class="lang-en">Milestone 1 • analyse_planctons.ipynb</span>
+                </div>
+                <h2>
+                    <span class="lang-fr">Étape 2b : Une Première Partition — K-Means</span>
+                    <span class="lang-en">Step 2b: A First Partition — K-Means</span>
+                </h2>
                 <div class="content-grid">
-                    <div class="text-block">
+                    <div class="text-block lang-fr">
                         <p>Une fois les données réduites par ACP, nous avons appliqué l'algorithme <b>K-Means</b> pour regrouper automatiquement les stations similaires. K-Means cherche à partitionner les données en <em>k</em> groupes en minimisant la distance de chaque point à son centroïde de cluster.</p>
                         <p>Pour déterminer le nombre optimal de groupes, nous avons évalué trois critères complémentaires : le <b>score de silhouette</b> (cohésion intra-cluster vs. séparation inter-clusters), l'<b>indice de Davies-Bouldin</b> (plus bas = meilleure séparation) et l'<b>indice de Calinski-Harabasz</b> (plus élevé = clusters plus denses). Le score de silhouette a guidé notre choix final.</p>
                         <p>Chaque cluster peut être nommé par ses <b>taxons dominants</b> : les groupes planctoniques dont la valeur Hellinger moyenne est la plus élevée dans ce cluster. Cela permet de passer de groupes anonymes à de véritables <b>profils biologiques</b>.</p>
@@ -184,18 +274,35 @@
                             <p><b>Limites du K-Means :</b> il impose un nombre de groupes fixé à l'avance, suppose des clusters de forme sphérique, et force chaque observation dans exactement un groupe — sans possibilité de signaler les zones de transition ni les points atypiques. Les méthodes de densité (HDBSCAN, OPTICS) révèleront que 75 % des stations occupent des zones de transition, confirmant que les données forment un continuum plutôt que des groupes bien séparés. C'est pour dépasser ces limites que nous avons exploré DBSCAN et GMM.</p>
                         </div>
                     </div>
+                    <div class="text-block lang-en">
+                        <p>Once the data was reduced by PCA, we applied the <b>K-Means</b> algorithm to automatically group similar stations. K-Means seeks to partition data into <em>k</em> groups by minimizing the distance of each point to its cluster centroid.</p>
+                        <p>To determine the optimal number of groups, we evaluated three complementary criteria: the <b>silhouette score</b> (intra-cluster cohesion vs. inter-cluster separation), the <b>Davies-Bouldin index</b> (lower = better separation) and the <b>Calinski-Harabasz index</b> (higher = denser clusters). The silhouette score guided our final choice.</p>
+                        <p>Each cluster can be named by its <b>dominant taxa</b>: the plankton groups whose average Hellinger value is highest in that cluster. This allows moving from anonymous groups to true <b>biological profiles</b>.</p>
+                        <div class="glass-card">
+                            <p><b>Limitations of K-Means:</b> it requires a fixed number of groups set in advance, assumes spherically shaped clusters, and forces each observation into exactly one group — with no way to flag transition zones or outliers. Density-based methods (HDBSCAN, OPTICS) will reveal that 75% of stations occupy transition zones, confirming that the data forms a continuum rather than well-separated groups. It is to overcome these limitations that we explored DBSCAN and GMM.</p>
+                        </div>
+                    </div>
                     <div>
                         <img src="figures/fig_11_kmeans_clusters.png" alt="K-Means clusters">
-                        <p class="fig-caption"><b>Résultat du K-Means :</b> Le panneau supérieur projette les clusters dans l'espace ACP (PC1 × PC2) — chaque couleur représente un groupe homogène de stations. Le panneau inférieur cartographie ces groupes géographiquement : on distingue des régions océaniques cohérentes (zones tropicales, tempérées, polaires). Le nombre optimal de clusters a été déterminé par le score de silhouette, révélant les grandes provinces biologiques structurées par les gradients de température et de profondeur.</p>
+                        <p class="fig-caption">
+                            <span class="lang-fr"><b>Résultat du K-Means :</b> Le panneau supérieur projette les clusters dans l'espace ACP (PC1 × PC2) — chaque couleur représente un groupe homogène de stations. Le panneau inférieur cartographie ces groupes géographiquement : on distingue des régions océaniques cohérentes (zones tropicales, tempérées, polaires). Le nombre optimal de clusters a été déterminé par le score de silhouette, révélant les grandes provinces biologiques structurées par les gradients de température et de profondeur.</span>
+                            <span class="lang-en"><b>K-Means Result:</b> The upper panel projects clusters into the PCA space (PC1 × PC2) — each color represents a homogeneous group of stations. The lower panel maps these groups geographically: distinct oceanic regions are visible (tropical, temperate, polar zones). The optimal number of clusters was determined by the silhouette score, revealing the major biological provinces structured by temperature and depth gradients.</span>
+                        </p>
                     </div>
                 </div>
             </section>
 
             <!-- Slide 6: Jalon 2 - La Recherche de Formes -->
             <section>
-                <div class="source-badge">Jalon 2 • 02_representations.ipynb</div>
-                <h2>Étape 3 : Explorer d'autres perspectives</h2>
-                <div class="text-block">
+                <div class="source-badge">
+                    <span class="lang-fr">Jalon 2 • 02_representations.ipynb</span>
+                    <span class="lang-en">Milestone 2 • 02_representations.ipynb</span>
+                </div>
+                <h2>
+                    <span class="lang-fr">Étape 3 : Explorer d'autres perspectives</span>
+                    <span class="lang-en">Step 3: Explore Other Perspectives</span>
+                </h2>
+                <div class="text-block lang-fr">
                     <p>L'ACP suppose que les données s'organisent selon des axes droits. Mais la nature, elle, n'est pas toujours linéaire. Et si les communautés planctoniques s'organisaient en courbes, en spirales, en surfaces repliées sur elles-mêmes ?</p>
                     <p>Nous avons testé trois méthodes alternatives :</p>
                     <ul style="margin: 0 0 12px 20px;">
@@ -207,49 +314,98 @@
                         <p><b>Résultat :</b> les communautés forment un <b>continuum</b> — pas des groupes discrets, mais des transitions douces le long de gradients environnementaux (température, profondeur, salinité). Les méthodes non-linéaires ont révélé des filaments que l'ACP n'aurait jamais montrés.</p>
                     </div>
                 </div>
+                <div class="text-block lang-en">
+                    <p>PCA assumes data organizes along straight axes. But nature is not always linear. What if planktonic communities organized themselves in curves, spirals, or surfaces folded upon themselves?</p>
+                    <p>We tested three alternative methods:</p>
+                    <ul style="margin: 0 0 12px 20px;">
+                        <li><b>Isomap</b>: computes distances between stations by following the "surface" of the actual data, like measuring a path on a mountain rather than as the crow flies.</li>
+                        <li><b>LLE (Locally Linear Embedding)</b>: reconstructs each station from its immediate neighbors, like a puzzle where each piece fits together locally.</li>
+                        <li><b>Non-metric MDS</b>: projects data into 2D while preserving only the order of dissimilarities — without forcing a precise scale.</li>
+                    </ul>
+                    <div class="glass-card">
+                        <p><b>Result:</b> communities form a <b>continuum</b> — not discrete groups, but smooth transitions along environmental gradients (temperature, depth, salinity). Non-linear methods revealed filaments that PCA would never have shown.</p>
+                    </div>
+                </div>
                 <img src="figures/fig_18_comparaison_representations.png" style="max-height: 250px; width: auto; display: block; margin: 20px auto;">
-                <p class="fig-caption"><b>Galerie comparative des projections 2D :</b> Chaque panneau projette les mêmes données selon une méthode différente. L'ACP (en haut à gauche) offre une vue linéaire et lisible, mais aplatit les structures courbes. L'Isomap et la LLE "déroulent" la géométrie réelle des données en respectant les distances locales : on y voit alors des filaments continus, qui correspondent aux gradients de température et de profondeur. Le MDS non-métrique confirme que la structure des données ressemble davantage à un continuum qu'à des groupes bien séparés.</p>
+                <p class="fig-caption">
+                    <span class="lang-fr"><b>Galerie comparative des projections 2D :</b> Chaque panneau projette les mêmes données selon une méthode différente. L'ACP (en haut à gauche) offre une vue linéaire et lisible, mais aplatit les structures courbes. L'Isomap et la LLE "déroulent" la géométrie réelle des données en respectant les distances locales : on y voit alors des filaments continus, qui correspondent aux gradients de température et de profondeur. Le MDS non-métrique confirme que la structure des données ressemble davantage à un continuum qu'à des groupes bien séparés.</span>
+                    <span class="lang-en"><b>Comparative Gallery of 2D Projections:</b> Each panel projects the same data using a different method. PCA (top left) offers a linear and readable view, but flattens curved structures. Isomap and LLE "unroll" the real geometry of the data by respecting local distances: continuous filaments become visible, corresponding to temperature and depth gradients. Non-metric MDS confirms that the data structure more closely resembles a continuum than well-separated groups.</span>
+                </p>
             </section>
 
             <!-- Slide 7: Jalon 3 - DBSCAN -->
             <section>
-                <div class="source-badge">Jalon 3 • analyse_planctons.ipynb</div>
-                <h2>Étape 4 : Identifier les Familles — DBSCAN</h2>
+                <div class="source-badge">
+                    <span class="lang-fr">Jalon 3 • analyse_planctons.ipynb</span>
+                    <span class="lang-en">Milestone 3 • analyse_planctons.ipynb</span>
+                </div>
+                <h2>
+                    <span class="lang-fr">Étape 4 : Identifier les Familles — DBSCAN</span>
+                    <span class="lang-en">Step 4: Identify Families — DBSCAN</span>
+                </h2>
                 <div class="content-grid">
-                    <div class="text-block">
+                    <div class="text-block lang-fr">
                         <p><b>DBSCAN</b> (<em>Density-Based Spatial Clustering of Applications with Noise</em>) travaille par <b>densité locale</b> : il identifie les zones où les stations sont concentrées, et laisse de côté les points trop isolés qu'il étiquette comme "bruit". Deux paramètres clés — <em>ε</em> (rayon de voisinage) et <em>min_samples</em> (seuil de densité) — ont été déterminés par une recherche sur grille basée sur le graphe des distances k-NN.</p>
                         <p>Ce "bruit" n'est pas un défaut — c'est une <b>information précieuse</b>. Ces stations isolées correspondent souvent à des zones de transition entre deux masses d'eau, à des événements ponctuels (upwelling, bloom algal) ou à des échantillons prélevés dans des conditions exceptionnelles. Leur localisation géographique révèle les <b>frontières écologiques</b> de l'océan.</p>
                         <p>Pour chaque cluster, nous avons identifié les <b>taxons dominants</b> (top 3 en valeur Hellinger moyenne) permettant de nommer biologiquement chaque province : cluster à dominance Copepoda, cluster à dominance Rhizaria, zone de mélange Chaetognatha–Mollusca, etc.</p>
                     </div>
+                    <div class="text-block lang-en">
+                        <p><b>DBSCAN</b> (<em>Density-Based Spatial Clustering of Applications with Noise</em>) works by <b>local density</b>: it identifies zones where stations are concentrated, and sets aside points that are too isolated, labeling them as "noise". Two key parameters — <em>ε</em> (neighborhood radius) and <em>min_samples</em> (density threshold) — were determined by a grid search based on the k-NN distance graph.</p>
+                        <p>This "noise" is not a flaw — it is <b>precious information</b>. These isolated stations often correspond to transition zones between two water masses, punctual events (upwelling, algal bloom) or samples collected under exceptional conditions. Their geographic location reveals the <b>ecological boundaries</b> of the ocean.</p>
+                        <p>For each cluster, we identified the <b>dominant taxa</b> (top 3 by mean Hellinger value) allowing each province to be biologically named: Copepoda-dominated cluster, Rhizaria-dominated cluster, Chaetognatha–Mollusca mixing zone, etc.</p>
+                    </div>
                     <div>
                         <img src="figures/fig_19_dbscan.png" alt="Groupes DBSCAN">
-                        <p class="fig-caption"><b>Résultat DBSCAN :</b> Le panneau gauche (graphe k-NN) montre le critère de choix de ε — la courbe s'inflexe là où la densité chute, signalant la frontière naturelle entre clusters et bruit. Le panneau central projette les clusters dans l'espace ACP : chaque couleur est une province biologique, les points gris sont le bruit. Le panneau droit montre le profil biologique moyen (heatmap Hellinger) de chaque cluster, révélant les taxons dominants qui définissent chaque groupe.</p>
+                        <p class="fig-caption">
+                            <span class="lang-fr"><b>Résultat DBSCAN :</b> Le panneau gauche (graphe k-NN) montre le critère de choix de ε — la courbe s'inflexe là où la densité chute, signalant la frontière naturelle entre clusters et bruit. Le panneau central projette les clusters dans l'espace ACP : chaque couleur est une province biologique, les points gris sont le bruit. Le panneau droit montre le profil biologique moyen (heatmap Hellinger) de chaque cluster, révélant les taxons dominants qui définissent chaque groupe.</span>
+                            <span class="lang-en"><b>DBSCAN Result:</b> The left panel (k-NN graph) shows the criterion for choosing ε — the curve inflects where density drops, signaling the natural boundary between clusters and noise. The central panel projects clusters into PCA space: each color is a biological province, grey dots are noise. The right panel shows the mean biological profile (Hellinger heatmap) for each cluster, revealing the dominant taxa that define each group.</span>
+                        </p>
                     </div>
                 </div>
             </section>
 
             <!-- Slide 8: Jalon 3 - GMM -->
             <section>
-                <div class="source-badge">Jalon 3 • analyse_planctons.ipynb</div>
-                <h2>Étape 5 : Accepter l'Incertitude — GMM</h2>
+                <div class="source-badge">
+                    <span class="lang-fr">Jalon 3 • analyse_planctons.ipynb</span>
+                    <span class="lang-en">Milestone 3 • analyse_planctons.ipynb</span>
+                </div>
+                <h2>
+                    <span class="lang-fr">Étape 5 : Accepter l'Incertitude — GMM</span>
+                    <span class="lang-en">Step 5: Embrace Uncertainty — GMM</span>
+                </h2>
                 <div class="content-grid">
-                    <div class="text-block">
+                    <div class="text-block lang-fr">
                         <p>Jusqu'ici, chaque station était assignée à <em>un seul</em> groupe. Mais la réalité marine est plus nuancée : une station prélevée à la frontière de deux courants n'appartient pas franchement à l'un ou à l'autre.</p>
                         <p>Le <b>GMM (Gaussian Mixture Model)</b> modélise chaque groupe comme une distribution gaussienne ("cloche") dans l'espace des données, et calcule une <b>probabilité d'appartenance</b> à chacun des groupes. Le critère BIC a sélectionné k = 18 composantes avec covariance full, soit 972 paramètres libres pour 4 264 observations — un sur-ajustement manifeste. Une covariance 'diag' ou 'sphérique' aurait réduit ce nombre à ~180 ou ~28 respectivement et constitue une piste d'amélioration directe non explorée dans ce TER.</p>
                         <p>Une station peut appartenir à 70 % au groupe "eaux tropicales chaudes" et à 30 % au groupe "eaux de surface tempérées". Ce n'est pas de l'indécision — c'est de la <b>précision biologique</b>. Les <b>zones de fort chevauchement</b> (incertitude élevée) correspondent systématiquement aux fronts océaniques : des carrefours écologiques où plusieurs communautés coexistent et se mélangent sous l'effet des courants.</p>
                     </div>
+                    <div class="text-block lang-en">
+                        <p>Until now, each station was assigned to <em>a single</em> group. But marine reality is more nuanced: a station sampled at the boundary of two currents does not clearly belong to either one.</p>
+                        <p>The <b>GMM (Gaussian Mixture Model)</b> models each group as a Gaussian distribution ("bell curve") in the data space, and computes a <b>membership probability</b> for each group. The BIC criterion selected k = 18 components with full covariance, i.e. 972 free parameters for 4,264 observations — a manifest overfitting. A 'diag' or 'spherical' covariance would have reduced this number to ~180 or ~28 respectively and represents a direct improvement path not explored in this TER.</p>
+                        <p>A station can belong 70% to the "warm tropical waters" group and 30% to the "temperate surface waters" group. This is not indecision — it is <b>biological precision</b>. <b>High-overlap zones</b> (high uncertainty) systematically correspond to oceanic fronts: ecological crossroads where several communities coexist and mix under the influence of currents.</p>
+                    </div>
                     <div>
                         <img src="figures/fig_24_gmm.png" alt="GMM probabilités">
-                        <p class="fig-caption"><b>Analyse GMM :</b> En haut, les courbes BIC et AIC en fonction du nombre de composantes k (jusqu'à 20) : le minimum BIC indique le k optimal — si la courbe se stabilise avant 20, les données ne justifient pas une granularité plus fine. En bas à gauche, les clusters GMM dans l'espace ACP avec le type de covariance retenu. En bas à droite, la carte d'incertitude : les points rouges (P ≈ 0,5) signalent les zones de transition biologiquement actives — upwellings, fronts thermiques, mélanges de masses d'eau.</p>
+                        <p class="fig-caption">
+                            <span class="lang-fr"><b>Analyse GMM :</b> En haut, les courbes BIC et AIC en fonction du nombre de composantes k (jusqu'à 20) : le minimum BIC indique le k optimal — si la courbe se stabilise avant 20, les données ne justifient pas une granularité plus fine. En bas à gauche, les clusters GMM dans l'espace ACP avec le type de covariance retenu. En bas à droite, la carte d'incertitude : les points rouges (P ≈ 0,5) signalent les zones de transition biologiquement actives — upwellings, fronts thermiques, mélanges de masses d'eau.</span>
+                            <span class="lang-en"><b>GMM Analysis:</b> At top, BIC and AIC curves as a function of the number of components k (up to 20): the BIC minimum indicates the optimal k — if the curve stabilizes before 20, the data does not justify finer granularity. Bottom left, GMM clusters in PCA space with the retained covariance type. Bottom right, the uncertainty map: red dots (P ≈ 0.5) signal biologically active transition zones — upwellings, thermal fronts, water mass mixing.</span>
+                        </p>
                     </div>
                 </div>
             </section>
 
             <!-- Slide 9: Le Bilan -->
             <section>
-                <div class="source-badge">Synthèse Comparative</div>
-                <h2>Bilan : Quelle méthode retenir ?</h2>
-                <div class="text-block">
+                <div class="source-badge">
+                    <span class="lang-fr">Synthèse Comparative</span>
+                    <span class="lang-en">Comparative Summary</span>
+                </div>
+                <h2>
+                    <span class="lang-fr">Bilan : Quelle méthode retenir ?</span>
+                    <span class="lang-en">Summary: Which Method to Retain?</span>
+                </h2>
+                <div class="text-block lang-fr">
                     <p>Six algorithmes mis en compétition, évalués par silhouette, Davies-Bouldin, Calinski-Harabasz et NMI — la NMI, calculée sur les seuls points assignés, est plus robuste que l'ARI pour comparer des algorithmes à taux de couverture hétérogènes :</p>
                     <div class="glass-card">
                         <ul>
@@ -260,30 +416,67 @@
                         </ul>
                     </div>
                     <p>Au final, nous avons identifié <b>plusieurs grandes provinces biologiques stables</b>, caractérisées par des taxons dominants distincts :</p>
-                    <ul style="font-size: 0.6em; margin: 0 0 10px 20px;">
+                    <ul style="font-size: 0.68em; margin: 0 0 10px 20px;">
                         <li><b>Provinces tropicales chaudes :</b> dominées par Rhizaria, Trichodesmium — eaux oligotrophes chaudes de surface.</li>
                         <li><b>Provinces tempérées productives :</b> dominées par Copepoda, Chaetognatha — zones de fort upwelling et de forte productivité.</li>
                         <li><b>Zones méso-pélagiques :</b> dominées par Appendicularia, Mollusca — couches intermédiaires, faible luminosité.</li>
                         <li><b>Zones de transition / bruit DBSCAN :</b> signatures mixtes, fronts thermiques et courants de bord ouest.</li>
                     </ul>
                 </div>
+                <div class="text-block lang-en">
+                    <p>Six algorithms in competition, evaluated by silhouette, Davies-Bouldin, Calinski-Harabasz and NMI — NMI, calculated on assigned points only, is more robust than ARI for comparing algorithms with heterogeneous coverage rates:</p>
+                    <div class="glass-card">
+                        <ul>
+                            <li><b>K-Means:</b> Reference partition, fast. Imposes convex boundaries on a distribution that HDBSCAN and OPTICS reveal to be essentially continuous (74.9% noise) — the seven provinces are operational reference zones, not natural discontinuities.</li>
+                            <li><b>DBSCAN / HDBSCAN:</b> Detect variable-density structures and isolate noise — valuable for identifying transition zones and punctual events (upwelling, bloom).</li>
+                            <li><b>GMM:</b> The most biologically realistic — models overlaps between provinces and quantifies membership uncertainty at oceanic fronts.</li>
+                            <li><b>Spectral Clustering:</b> Captures complex non-convex geometric structures, complementary to other approaches.</li>
+                        </ul>
+                    </div>
+                    <p>Ultimately, we identified <b>several stable major biological provinces</b>, characterized by distinct dominant taxa:</p>
+                    <ul style="font-size: 0.68em; margin: 0 0 10px 20px;">
+                        <li><b>Warm tropical provinces:</b> dominated by Rhizaria, Trichodesmium — warm oligotrophic surface waters.</li>
+                        <li><b>Productive temperate provinces:</b> dominated by Copepoda, Chaetognatha — strong upwelling and high productivity zones.</li>
+                        <li><b>Mesopelagic zones:</b> dominated by Appendicularia, Mollusca — intermediate layers, low luminosity.</li>
+                        <li><b>Transition / DBSCAN noise zones:</b> mixed signatures, thermal fronts and western boundary currents.</li>
+                    </ul>
+                </div>
             </section>
 
             <!-- Slide 10: Conclusion -->
             <section>
-                <div class="source-badge">Conclusion Finale</div>
-                <h2>Conclusion & Perspectives</h2>
+                <div class="source-badge">
+                    <span class="lang-fr">Conclusion Finale</span>
+                    <span class="lang-en">Final Conclusion</span>
+                </div>
+                <h2>
+                    <span class="lang-fr">Conclusion &amp; Perspectives</span>
+                    <span class="lang-en">Conclusion &amp; Perspectives</span>
+                </h2>
                 <div class="content-grid">
-                    <div class="text-block">
+                    <div class="text-block lang-fr">
                         <p>Ce projet permet d'<b>automatiser la surveillance de la santé des océans</b>.</p>
                         <p>La prochaine étape sera de lier ces groupes au <b>changement climatique</b>.</p>
                         <div class="highlight-box">
                             "Une base solide pour prédire l'avenir de nos écosystèmes marins."
                         </div>
                     </div>
+                    <div class="text-block lang-en">
+                        <p>This project enables <b>automated monitoring of ocean health</b>.</p>
+                        <p>The next step will be to link these groups to <b>climate change</b>.</p>
+                        <div class="highlight-box">
+                            "A solid foundation for predicting the future of our marine ecosystems."
+                        </div>
+                    </div>
                     <div style="text-align: center;">
-                        <h3 style="color: var(--accent-blue); font-size: 1.5em; margin-bottom: 20px;">Merci !</h3>
-                        <p class="text-dim" style="font-size: 0.6em;">Analyse des Concentrations de Planctons Marins<br>Projet 2026</p>
+                        <h3 style="color: var(--accent-blue); font-size: 1.5em; margin-bottom: 20px;">
+                            <span class="lang-fr">Merci !</span>
+                            <span class="lang-en">Thank you!</span>
+                        </h3>
+                        <p style="color: var(--text-dim); font-size: 0.65em;">
+                            <span class="lang-fr">Analyse des Concentrations de Planctons Marins<br>Projet 2026</span>
+                            <span class="lang-en">Analysis of Marine Plankton Concentrations<br>Project 2026</span>
+                        </p>
                     </div>
                 </div>
             </section>
@@ -309,6 +502,30 @@
             margin: 0.02,
             plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
         });
+
+        let currentLang = 'fr';
+
+        function getDisplayValue(el) {
+            const tag = el.tagName;
+            if (tag === 'SPAN') return 'inline';
+            if (tag === 'LI') return 'list-item';
+            return 'block';
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'fr' ? 'en' : 'fr';
+            const hideClass = 'lang-' + (currentLang === 'fr' ? 'en' : 'fr');
+            const showClass = 'lang-' + currentLang;
+
+            document.querySelectorAll('.' + hideClass).forEach(function(el) {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('.' + showClass).forEach(function(el) {
+                el.style.display = getDisplayValue(el);
+            });
+
+            document.getElementById('langBtn').textContent = currentLang === 'fr' ? 'EN' : 'FR';
+        }
     </script>
 </body>
 </html>
