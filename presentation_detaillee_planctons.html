@@ -186,10 +186,8 @@
                         <span class="lang-en">Understanding Marine Ecosystems</span>
                     </h1>
                     <div class="text-block" style="text-align: center; font-size: 0.88em;">
-                        <p class="lang-fr">Le plancton est le poumon de notre planète, mais ses communautés sont complexes et varient selon les océans. Notre mission : <b>cartographier ces communautés</b> à partir de 11 ans de données récoltées par 37 expéditions mondiales.</p>
-                        <p class="lang-en">Plankton is the lungs of our planet, but its communities are complex and vary across oceans. Our mission: <b>map these communities</b> from 11 years of data collected by 37 worldwide expeditions.</p>
-                        <p class="lang-fr">Nous avons utilisé l'intelligence artificielle pour identifier des "provinces" biologiques cohérentes, permettant de mieux comprendre comment la vie marine s'organise face aux conditions environnementales.</p>
-                        <p class="lang-en">We used artificial intelligence to identify coherent biological "provinces", allowing us to better understand how marine life organizes itself in response to environmental conditions.</p>
+                        <p class="lang-fr">Notre mission : <b>cartographier les communautés planctoniques</b> à partir de 11 ans de données issues de 37 expéditions mondiales, via des méthodes d'apprentissage non supervisé.</p>
+                        <p class="lang-en">Our mission: <b>map planktonic communities</b> from 11 years of data collected by 37 worldwide expeditions, using unsupervised learning methods.</p>
                     </div>
                 </div>
             </section>
@@ -206,28 +204,24 @@
                 </h2>
                 <div class="content-grid">
                     <div class="text-block lang-fr">
-                        <p>Nos analyses reposent sur un jeu de données unique regroupant des mesures physiques et biologiques à l'échelle planétaire :</p>
                         <ul>
-                            <li><b>Le Volet Biologique :</b> Concentrations de 19 groupes de zooplanctons (Copepoda, Collodaria, Mollusca, etc.), identifiés par imagerie.</li>
-                            <li><b>Le Volet Environnemental :</b> Température, Salinité, Oxygène et Chlorophylle, mesurés simultanément à chaque prélèvement.</li>
-                            <li><b>Le Volet Spatial & Temporel :</b> 37 campagnes océanographiques mondiales étalées sur plus d'une décennie.</li>
+                            <li><b>Biologique :</b> concentrations de 19 groupes de zooplanctons, identifiés par imagerie.</li>
+                            <li><b>Environnemental :</b> température, salinité, oxygène, chlorophylle.</li>
+                            <li><b>Spatial & Temporel :</b> 37 campagnes mondiales sur plus d'une décennie.</li>
                         </ul>
-                        <p>Chaque ligne de nos données représente une "signature" de l'état de l'océan à un instant T.</p>
                     </div>
                     <div class="text-block lang-en">
-                        <p>Our analyses are based on a unique dataset combining physical and biological measurements at a planetary scale:</p>
                         <ul>
-                            <li><b>The Biological Component:</b> Concentrations of 19 zooplankton groups (Copepoda, Collodaria, Mollusca, etc.), identified by imaging.</li>
-                            <li><b>The Environmental Component:</b> Temperature, Salinity, Oxygen and Chlorophyll, measured simultaneously at each sampling point.</li>
-                            <li><b>The Spatial & Temporal Component:</b> 37 global oceanographic campaigns spanning more than a decade.</li>
+                            <li><b>Biological:</b> concentrations of 19 zooplankton groups, identified by imaging.</li>
+                            <li><b>Environmental:</b> temperature, salinity, oxygen, chlorophyll.</li>
+                            <li><b>Spatial & Temporal:</b> 37 global campaigns spanning over a decade.</li>
                         </ul>
-                        <p>Each row in our data represents a "signature" of the ocean's state at a given moment T.</p>
                     </div>
                     <div>
                         <img src="figures/fig_03_carte_spatiale.png" alt="Carte des données">
                         <p class="fig-caption">
-                            <span class="lang-fr"><b>Distribution Mondiale des Stations :</b> Chaque point représente une station de prélèvement issue des 37 campagnes océanographiques. La carte montre une couverture planétaire remarquable : océans Atlantique, Pacifique, Indien, mer Méditerranée et zones polaires sont représentés. Cette diversité géographique est essentielle — elle garantit que nos résultats ne sont pas biaisés vers un seul type d'environnement marin et permettent d'identifier des structures biologiques vraiment universelles.</span>
-                            <span class="lang-en"><b>Global Distribution of Stations:</b> Each dot represents a sampling station from the 37 oceanographic campaigns. The map shows remarkable global coverage: Atlantic, Pacific, Indian Oceans, the Mediterranean Sea and polar regions are all represented. This geographical diversity is essential — it ensures our results are not biased toward a single type of marine environment and allows identifying truly universal biological structures.</span>
+                            <span class="lang-fr">Distribution mondiale des stations de prélèvement — couverture planétaire (Atlantique, Pacifique, Indien, Méditerranée, zones polaires).</span>
+                            <span class="lang-en">Global distribution of sampling stations — planetary coverage (Atlantic, Pacific, Indian, Mediterranean, polar zones).</span>
                         </p>
                     </div>
                 </div>
@@ -245,26 +239,24 @@
                 </h2>
                 <div class="content-grid">
                     <div class="text-block lang-fr">
-                        <p>Avant toute analyse, nous avons dû résoudre un problème fondamental : <b>l'hétérogénéité des données</b>. Certaines espèces de plancton, comme les Copepoda, sont omniprésentes et peuvent être comptées par centaines dans un même échantillon. D'autres, très rares, apparaissent à peine une ou deux fois sur l'ensemble du jeu de données.</p>
-                        <p>Si l'on compare ces chiffres bruts directement, les espèces rares deviennent <b>invisibles</b> mathématiquement — écrasées par les valeurs des espèces dominantes. Ce n'est pas un problème de mesure, c'est un problème d'échelle.</p>
+                        <p>Problème : les espèces abondantes (Copepoda) écrasent les espèces rares à l'échelle brute.</p>
                         <div class="highlight-box">
-                            "La transformation de Hellinger résout cela : pour chaque station, on divise la concentration de chaque espèce par le total capturé, puis on prend la racine carrée. Le résultat n'est plus une quantité, c'est une <em>proportion pondérée</em>."
+                            Hellinger : diviser chaque concentration par le total de la station, puis prendre la racine carrée → chaque station devient un <em>profil de composition relative</em>.
                         </div>
-                        <p>Concrètement : deux stations avec des populations très différentes en taille mais avec la <b>même composition relative</b> d'espèces seront désormais reconnues comme similaires. C'est cette notion de portrait de communauté — et non de volume — qui guide toute la suite de l'analyse.</p>
+                        <p>Deux stations à volumes très différents mais de <b>même composition</b> sont désormais reconnues comme similaires.</p>
                     </div>
                     <div class="text-block lang-en">
-                        <p>Before any analysis, we had to solve a fundamental problem: <b>data heterogeneity</b>. Some plankton species, like Copepoda, are ubiquitous and can be counted in the hundreds in a single sample. Others, very rare, barely appear once or twice across the entire dataset.</p>
-                        <p>If we compare these raw numbers directly, rare species become <b>invisible</b> mathematically — crushed by the values of dominant species. This is not a measurement problem, it is a scale problem.</p>
+                        <p>Problem: abundant species (Copepoda) overshadow rare species on the raw scale.</p>
                         <div class="highlight-box">
-                            "The Hellinger transformation solves this: for each station, we divide the concentration of each species by the total captured, then take the square root. The result is no longer a quantity, it is a <em>weighted proportion</em>."
+                            Hellinger: divide each concentration by the station total, then take the square root → each station becomes a <em>relative composition profile</em>.
                         </div>
-                        <p>In practice: two stations with very different population sizes but the <b>same relative species composition</b> will now be recognized as similar. It is this notion of community portrait — rather than volume — that guides the entire analysis.</p>
+                        <p>Two stations with very different volumes but the <b>same composition</b> are now recognized as similar.</p>
                     </div>
                     <div>
-                        <img src="figures/fig_06_hellinger_transformation.png" alt="Nettoyage">
+                        <img src="figures/fig_06_hellinger_transformation.png" alt="Transformation Hellinger">
                         <p class="fig-caption">
-                            <span class="lang-fr"><b>Comparaison Avant/Après la Transformation de Hellinger :</b> À gauche, les données brutes révèlent un déséquilibre criant : une ou deux espèces très abondantes (comme les Copepoda) dominent complètement l'échelle, rendant les autres espèces quasiment invisibles. À droite, après la transformation, chaque station est convertie en un <em>profil de présence relative</em> : peu importe la quantité totale capturée, c'est la composition de la communauté qui compte. Les espèces rares deviennent lisibles et comparables aux espèces dominantes.</span>
-                            <span class="lang-en"><b>Before/After Comparison of the Hellinger Transformation:</b> On the left, raw data reveals a stark imbalance: one or two highly abundant species (like Copepoda) completely dominate the scale, making other species nearly invisible. On the right, after transformation, each station is converted into a <em>relative presence profile</em>: regardless of the total quantity captured, it is the community composition that matters. Rare species become readable and comparable to dominant species.</span>
+                            <span class="lang-fr">Avant/après Hellinger : les espèces rares, écrasées dans les données brutes, deviennent lisibles après transformation.</span>
+                            <span class="lang-en">Before/after Hellinger: rare species, crushed in raw data, become readable after transformation.</span>
                         </p>
                     </div>
                 </div>
@@ -282,20 +274,18 @@
                 </h2>
                 <div class="content-grid">
                     <div class="text-block lang-fr">
-                        <p>Nos données ont 19 dimensions — une par type de plancton. Impossible à visualiser directement. L'<b>Analyse en Composantes Principales (ACP)</b> est une technique qui compresse ces 19 dimensions en quelques grands axes, chacun capturant une partie de la variabilité totale des données.</p>
-                        <p>Concrètement : au lieu de décrire une station par ses 19 concentrations d'espèces, on la décrit par sa position sur 2 ou 3 axes synthétiques. Ces axes ne correspondent pas à des espèces réelles, mais à des <b>combinaisons d'espèces</b> qui varient ensemble.</p>
-                        <p><b>Ce que nous avons découvert :</b> nous avons conservé suffisamment d'axes pour expliquer <b>plus de 80 % de la variabilité</b> totale des données. Le premier axe traduit globalement la "richesse" et la densité du milieu marin. Le second révèle des oppositions biologiques claires : certaines espèces prospèrent dans les eaux froides profondes, d'autres dans les zones de surface chaudes et productives.</p>
+                        <p>19 dimensions (une par type de plancton) — impossibles à visualiser directement. L'<b>ACP</b> les compresse en quelques axes synthétiques couvrant <b>plus de 80 % de la variabilité</b>.</p>
+                        <p>Axe 1 : richesse et densité du milieu. Axe 2 : opposition eaux froides profondes / zones de surface chaudes.</p>
                     </div>
                     <div class="text-block lang-en">
-                        <p>Our data has 19 dimensions — one per plankton type. Impossible to visualize directly. <b>Principal Component Analysis (PCA)</b> is a technique that compresses these 19 dimensions into a few major axes, each capturing part of the total variability in the data.</p>
-                        <p>In practice: instead of describing a station by its 19 species concentrations, we describe it by its position on 2 or 3 synthetic axes. These axes do not correspond to real species, but to <b>combinations of species</b> that vary together.</p>
-                        <p><b>What we discovered:</b> we retained enough axes to explain <b>more than 80% of the total variability</b> in the data. The first axis broadly reflects the "richness" and density of the marine environment. The second reveals clear biological oppositions: some species thrive in cold deep waters, others in warm productive surface zones.</p>
+                        <p>19 dimensions (one per plankton type) — impossible to visualize directly. <b>PCA</b> compresses them into a few synthetic axes covering <b>more than 80% of the variability</b>.</p>
+                        <p>Axis 1: richness and density of the environment. Axis 2: opposition between cold deep waters / warm surface zones.</p>
                     </div>
                     <div>
                         <img src="figures/fig_09_pca_cercle_correlations.png" alt="PCA" style="width: 80%; display: block; margin: 0 auto;">
                         <p class="fig-caption">
-                            <span class="lang-fr"><b>Cercle des Corrélations de l'ACP :</b> Chaque flèche représente une espèce de plancton. Sa longueur indique à quel point cette espèce contribue à différencier les stations : une flèche longue = une espèce très discriminante. La direction révèle les relations : des flèches parallèles indiquent des espèces qui cohabitent systématiquement (corrélées positivement), tandis que des flèches opposées signalent une exclusion mutuelle. Les espèces proches du centre sont peu informatives sur ces deux axes principaux.</span>
-                            <span class="lang-en"><b>PCA Correlation Circle:</b> Each arrow represents a plankton species. Its length indicates how much this species contributes to differentiating stations: a long arrow = a highly discriminating species. The direction reveals relationships: parallel arrows indicate species that systematically coexist (positively correlated), while opposing arrows signal mutual exclusion. Species near the center provide little information on these two main axes.</span>
+                            <span class="lang-fr">Cercle des corrélations ACP — longueur des flèches : pouvoir discriminant ; direction : co-occurrence (parallèles) ou exclusion mutuelle (opposées).</span>
+                            <span class="lang-en">PCA correlation circle — arrow length: discriminating power; direction: co-occurrence (parallel) or mutual exclusion (opposite).</span>
                         </p>
                     </div>
                 </div>
@@ -313,31 +303,29 @@
                 </h2>
                 <div class="content-grid">
                     <div class="text-block lang-fr">
-                        <p>Une fois les données réduites par ACP, nous avons appliqué l'algorithme <b>K-Means</b> pour regrouper automatiquement les stations similaires. K-Means cherche à partitionner les données en <em>k</em> groupes en minimisant la distance de chaque point à son centroïde de cluster.</p>
-                        <p>Pour déterminer le nombre optimal de groupes, nous avons testé k de 2 à 10 avec trois critères complémentaires. La <b>méthode du coude</b> (inertie intra-clusters) révèle un <b>point d'inflexion net à k=7</b> : au-delà, le gain de compacité devient marginal. Le <b>score de silhouette</b> atteint son maximum à k=7 (0,31), confirmant la meilleure séparation inter-clusters. L'<b>indice de Davies-Bouldin</b> est également minimisé à k=7. Ces trois signaux convergent vers <b>K = 7</b> comme nombre optimal de provinces biologiques.</p>
-                        <p>Chaque cluster peut être nommé par ses <b>taxons dominants</b> : les groupes planctoniques dont la valeur Hellinger moyenne est la plus élevée dans ce cluster. Cela permet de passer de groupes anonymes à de véritables <b>profils biologiques</b>.</p>
+                        <p>K-Means regroupe les stations en minimisant la distance à chaque centroïde. Trois critères convergent vers <b>K = 7</b> : méthode du coude, score de silhouette (max 0,31) et Davies-Bouldin.</p>
+                        <p>Chaque cluster est nommé par ses <b>taxons dominants</b> (top 3 en valeur Hellinger moyenne).</p>
                         <div class="glass-card">
-                            <p><b>Limites du K-Means :</b> il impose un nombre de groupes fixé à l'avance, suppose des clusters de forme sphérique, et force chaque observation dans exactement un groupe — sans possibilité de signaler les zones de transition ni les points atypiques. Les méthodes de densité (HDBSCAN, OPTICS) révèleront que 75 % des stations occupent des zones de transition, confirmant que les données forment un continuum plutôt que des groupes bien séparés. C'est pour dépasser ces limites que nous avons exploré DBSCAN et GMM.</p>
+                            <p><b>Limite :</b> clusters sphériques, k fixé à l'avance, pas de zones de transition — d'où l'exploration des méthodes par densité.</p>
                         </div>
                     </div>
                     <div class="text-block lang-en">
-                        <p>Once the data was reduced by PCA, we applied the <b>K-Means</b> algorithm to automatically group similar stations. K-Means seeks to partition data into <em>k</em> groups by minimizing the distance of each point to its cluster centroid.</p>
-                        <p>To determine the optimal number of groups, we tested k from 2 to 10 using three complementary criteria. The <b>elbow method</b> (intra-cluster inertia) reveals a <b>clear inflection point at k=7</b>: beyond that, the compactness gain becomes marginal. The <b>silhouette score</b> peaks at k=7 (0.31), confirming the best inter-cluster separation. The <b>Davies-Bouldin index</b> is also minimized at k=7. These three signals converge on <b>K = 7</b> as the optimal number of biological provinces.</p>
-                        <p>Each cluster can be named by its <b>dominant taxa</b>: the plankton groups whose average Hellinger value is highest in that cluster. This allows moving from anonymous groups to true <b>biological profiles</b>.</p>
+                        <p>K-Means groups stations by minimizing distance to each centroid. Three criteria converge on <b>K = 7</b>: elbow method, silhouette score (max 0.31) and Davies-Bouldin.</p>
+                        <p>Each cluster is named by its <b>dominant taxa</b> (top 3 by mean Hellinger value).</p>
                         <div class="glass-card">
-                            <p><b>Limitations of K-Means:</b> it requires a fixed number of groups set in advance, assumes spherically shaped clusters, and forces each observation into exactly one group — with no way to flag transition zones or outliers. Density-based methods (HDBSCAN, OPTICS) will reveal that 75% of stations occupy transition zones, confirming that the data forms a continuum rather than well-separated groups. It is to overcome these limitations that we explored DBSCAN and GMM.</p>
+                            <p><b>Limitation:</b> spherical clusters, k fixed in advance, no transition zones — hence the exploration of density-based methods.</p>
                         </div>
                     </div>
                     <div>
-                        <img src="figures/fig_10_kmeans_metriques.png" alt="Détermination du nombre optimal de clusters" style="width: 75%; display: block; margin: 0 auto;">
+                        <img src="figures/fig_10_kmeans_metriques.png" alt="Métriques K-Means" style="width: 75%; display: block; margin: 0 auto;">
                         <p class="fig-caption">
-                            <span class="lang-fr"><b>Pourquoi K = 7 ?</b> Quatre critères évalués de k=2 à k=10. <em>En haut à gauche</em> — méthode du coude : l'inertie chute fortement jusqu'à k=7, puis se stabilise (point d'inflexion). <em>En haut à droite</em> — score de silhouette : maximum à k=7 (0,31), traduisant la meilleure cohésion intra-cluster. <em>En bas à gauche</em> — Davies-Bouldin : minimum à k=7, soit la meilleure séparation inter-clusters. Ces trois signaux convergents ont guidé le choix de <b>K=7</b>.</span>
-                            <span class="lang-en"><b>Why K = 7?</b> Four criteria evaluated from k=2 to k=10. <em>Top left</em> — elbow method: inertia drops sharply up to k=7, then flattens (inflection point). <em>Top right</em> — silhouette score: maximum at k=7 (0.31), reflecting the best intra-cluster cohesion. <em>Bottom left</em> — Davies-Bouldin: minimum at k=7, i.e. the best inter-cluster separation. These three convergent signals guided the choice of <b>K=7</b>.</span>
+                            <span class="lang-fr">Coude, silhouette et Davies-Bouldin de k=2 à k=10 — trois signaux convergents vers K=7.</span>
+                            <span class="lang-en">Elbow, silhouette and Davies-Bouldin from k=2 to k=10 — three signals converging on K=7.</span>
                         </p>
                         <img src="figures/fig_11_kmeans_clusters.png" alt="K-Means clusters" style="margin-top: 12px;">
                         <p class="fig-caption">
-                            <span class="lang-fr"><b>Résultat :</b> 7 provinces biologiques projetées dans l'espace ACP (haut) et cartographiées géographiquement (bas) — zones tropicales, tempérées et polaires nettement différenciées.</span>
-                            <span class="lang-en"><b>Result:</b> 7 biological provinces projected in PCA space (top) and mapped geographically (bottom) — tropical, temperate, and polar zones clearly differentiated.</span>
+                            <span class="lang-fr">7 provinces biologiques en espace ACP et cartographiées géographiquement.</span>
+                            <span class="lang-en">7 biological provinces in PCA space and mapped geographically.</span>
                         </p>
                     </div>
                 </div>
